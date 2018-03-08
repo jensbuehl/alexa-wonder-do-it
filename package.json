@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "alexa-sdk": "^1.0.10"
-  },
-  "author": "Microsoft",
-  "license": "MIT",
-  "dependencies": {
+    "@microsoft/microsoft-graph-client": "^1.0.0",
     "alexa-sdk": "^1.0.7",
     "msgraph-sdk-javascript": "0.3.1",
     "voice-insights-sdk": "^1.2.2"
-  }
+  },
+  "author": "Microsoft",
+  "license": "MIT"
 }
