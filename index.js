@@ -1,392 +1,248 @@
 'use strict';
 const Alexa = require('alexa-sdk');
 const https = require("https");
-const list_is_empty = "#list_is_empty#";
+
+//Status of list, either active or completed
+const STATUS = {
+    ACTIVE: 'active',
+    COMPLETED: 'completed'
+};
 
 const api_url = 'api.amazonalexa.com';
 const api_port = '443';
-
 const APP_ID = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
 
-// Microsoft Graph JavaScript SDK
-//var MicrosoftGraph = require("msgraph-sdk-javascript");
-
-// Graph client
+// Microsoft Graph JavaScript SDK and client
+var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 var client = {};
 
-// Adding logging levels
-// error -  Other runtime errors or unexpected conditions. 
-// warn -   'Almost' errors, other runtime situations that are undesirable 
-//          or unexpected, but not necessarily "wrong".
-// info -   Interesting runtime events (startup/shutdown/Intents). 
-// debug -  Detailed information on the flow through the system. 
+// Log level definitions
 var logLevels = {error: 3, warn: 2, info: 1, debug: 0};
 
+// Language strings, as of now only German is supported
 const languageStrings = {
     'de': {
         translation: {
             SKILL_NAME: 'Wunder Todo',
-            WELCOME_MESSAGE: 'Willkommen bei Wunder Todo! ...Wie kann ich dir helfen?',
-            HELP_MESSAGE: 'Du kannst sagen, „Schreibe Brot auf Einkaufsliste“ ...Wie kann ich dir helfen, Uschi?',
+            WELCOME_MESSAGE: 'Willkommen bei Wunder Todo! ...Wie kann ich dir helfen, Uschi?',
+            HELP_MESSAGE: 'Du kannst sagen, „Schreibe Brot auf Einkaufsliste“ ...Wie kann ich dir helfen?',
             HELP_REPROMPT: 'Wie kann ich dir helfen, Uschi?',
             STOP_MESSAGE: 'Auf Wiedersehen!',
+            ERROR_MESSAGE: 'Es tut mir leid. Ich habe im Moment technische Probleme.'
         },
     },
 };
 
-exports.handler = function (event, context, callback) {
-    const alexa = Alexa.handler(event, context);
+/**
+ * Fetches list item information for each listItem in listItemIds. Executes the
+ * callback function with the response back from api.amazonalexa.com
+ * for each item in the list.
+ *
+ * @param {String} listId list id to check
+ * @param {String[]} listItemIds list item ids in the request
+ * @param {String} consentToken consent token from Alexa request
+ * @param {(String) => void} callback func for each list item
+ */
+const traverseListItems = (listId, listItemIds, consentToken, callback) => {
+    const listClient = new Alexa.services.ListManagementService();
+    listItemIds.forEach((itemId) => {
+        const listRequest = listClient.getListItem(listId, itemId, consentToken);
+
+        listRequest.then((response) => {
+            callback(response);
+        }).catch((err) => {
+            console.error(err);
+        });
+    });
+};
+
+/**
+ * Fetches list information for given list id. Executes the
+ * callback function with the response back from api.amazonalexa.com.
+ *
+ * @param {String} listId list id to check
+ * @param {String} status specify either “active” or “completed” items.
+ * @param {String} consentToken consent token from Alexa request
+ * @param {(String) => void} callback func for the list
+ */
+const getListInfo = (listId, status, consentToken, callback) => {
+    const listClient = new Alexa.services.ListManagementService();
+    const listInfo = listClient.getList(listId, status, consentToken);
+
+    listInfo.then((response) => {
+        callback(response);
+    }).catch((err) => {
+        console.error(err);
+    });
+};
+
+exports.handler = function(event, context, callback) {
+    const alexa = Alexa.handler(event, context, callback);
+
+    console.log("rhis.event = " + JSON.stringify(event));
+
     alexa.appId = APP_ID;
     alexa.resources = languageStrings;
     alexa.registerHandlers(handlers);
-    
-    // Validate Alexa list API access token
-    var alexaToken = event.context.System.apiAccessToken;
-    if (alexaToken) {
-        console.log("Alexa API Auth Token: " + alexaToken, logLevels.debug);
-    }
-    else {
-        console.log("Alexa list permissions are not defined!");
-    }
-    
-    // Validate Microsoft Graph API access token
-    var msToken = event.session.user.accessToken;
-    if (msToken) {
-        console.log("Microsoft Graph API Auth Token: " + msToken, logLevels.debug);
-
-        // Initialize the Microsoft Graph client
-        //client = MicrosoftGraph.Client.init({
-        //    authProvider: (done) => {
-        //        done(null, token);
-        //    }
-        //});
-        
-        // Handle the intent
-    }
-    else {
-        console.log("Microsoft Graph permissions are not defined!");
-    }
-    
-    alexa.execute();
-};
-
-/**
- * This is the handler for item created on household list
- */
-const itemCreatedHandler = function() {
-    console.log("Starting itemCreatedHandler");
-    var alexaToken = this.event.context.System.apiAccessToken;
-    getTopToDoItem(alexaToken, item =>
-    {
-        this.emit(':tell', item);
-    });
-    //TODO: Figure out the item and forward to MS-ToDo
-    this.emit(':tell', 'Alexa Element wurde erzeugt! Es folgt weiterleitung an Wunderlist.');
-    console.log("Ending itemCreatedHandler");
-};
-
-/**
- * This is the handler for the Unhandled event.
- */
-const addToIntentHandler = function() {
-    console.log("Starting addToIntentHandler");
-    var alexaToken = this.event.context.System.apiAccessToken;
-    getTopToDoItem(alexaToken, item =>
-    {
-        this.emit(':tell', item);
-    });
-    this.emit(':tell', 'An dieser stelle würdest du etwas hinzufügen');
-    console.log("Ending addToIntentHandler");
-};
-
-/**
- * Called when the session starts.
- */
-const newSessionRequestHandler = function() {
-    console.log("Starting newSessionRequestHandler");
-    if (this.event.request.type === "IntentRequest") {
-        this.emit(this.event.request.intent.name);
-    }
-    else {
-        this.emit(LAUNCH_REQUEST);
-    }
-    console.log("Ending newSessionRequestHandler");
-};
-
-/**
- * Handler for the launch request event.
- */
-const launchRequestHandler = function() {
-    console.log("Starting launchRequestHandler");
-    
-    var alexaToken = this.event.context.System.apiAccessToken;
-    getTopToDoItem(alexaToken, item =>
-    {
-        this.emit(':tell', item);
-    });
-    
-    //this.emit(':ask', this.t('WELCOME_MESSAGE'));
-    console.log("Ending launchRequestHandler");
-};
-
-/**
- * This is the handler for the SessionEnded event.
- */
-const sessionEndedRequestHandler = function() {
-    console.log("Starting sessionEndedRequestHandler");
-    this.emit(':tell', this.t('STOP_MESSAGE'));
-    console.log("Ending sessionEndedRequestHandler");
-};
-
-/**
- * This is the handler for the Unhandled event.
- */
-const unhandledRequestHandler = function() {
-    console.log("Starting unhandledRequestHandler");
-    var speechOutput = "Denk nach! Denk nach! Diese Anfrage kann ich leider nicht bearbeiten.";
-    this.emit(':tell', speechOutput);
-    console.log("Ending unhandledRequestHandler");
-};
-
-/**
- * This is the handler for the Amazon help built in intent.
- */
-const amazonHelpHandler = function() {
-    console.log("Starting amazonHelpHandler");
-    const speechOutput = this.t('HELP_MESSAGE');
-        const reprompt = this.t('HELP_MESSAGE');
-        this.emit(':ask', speechOutput, reprompt);
-    console.log("Ending amazonHelpHandler");
-};
-
-/**
- * This is the handler for the Amazon cancel built-in intent.
- */
-const amazonCancelHandler = function() {
-    console.log("Starting amazonCancelHandler");
-    this.emit(':tell', this.t('STOP_MESSAGE'));
-    console.log("Ending amazonCancelHandler");
-};
-
-/**
- * This is the handler for the Amazon stop built in intent.
- */
-const amazonStopHandler = function() {
-    console.log("Starting amazonStopHandler");
-    this.emit(':tell', this.t('STOP_MESSAGE'));
-    console.log("Ending amazonStopHandler");
-};
-
-// --------------- Helper List API functions -----------------------
-
-function getListsMetadata(token, callback) {
-    const lms = new Alexa.services.ListManagementService();
-    lms.getListsMetadata(token)
-    .then((data) => {
-        console.log('List retrieved: ' + JSON.stringify(data));
-        callback(data);
-        this.context.succeed();
-    })
-    .catch((error) => {
-        console.log(error.message);
-    });
-};
-
-/**
- * List API to retrieve the List of Lists : Lists Metadata.
- */
-const getListsMetadataOld = function(token, callback) {
-    console.log("Starting the get list metadata call.");
-    var options = {
-        host: api_url,
-        port: api_port,
-        path: '/v2/householdlists/',
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
+    try {
+        // Validate Alexa list API access token
+        var alexaToken = event.context.System.apiAccessToken;
+        if (alexaToken) {
+            console.log("Alexa API Auth Token: " + alexaToken, logLevels.debug);
+        } else {
+            console.log("Alexa list permissions are not defined!");
         }
+
+        // Validate Microsoft Graph API access token
+        var graphToken = event.context.System.user.accessToken;
+        //var graphToken = event.session.user.accessToken;
+        if (graphToken) {
+            console.log("Microsoft Graph API Auth Token: " + graphToken, logLevels.debug);
+
+            // Initialize the Microsoft Graph client
+            client = MicrosoftGraph.Client.init({
+                authProvider: (done) => {
+                    done(null, graphToken);
+                }
+            });        
+        } else {
+            console.log("Microsoft Graph permissions are not defined!");
+        }    
+        alexa.execute();
+    } catch (err){
+        console.error('Caught Error: ' + err);
+        alexa.emit(':tell', t('ERROR_MESSAGE'));
     }
+};
 
-    var req = https.request(options, (res) => {
-        console.log('STATUS: ', res.statusCode);
-        console.log('HEADERS: ', JSON.stringify(res.headers));
-
-        if(res.statusCode === 403) {
-            console.log("permissions are not granted");
-            callback(null);
-            return;
-        }
-        
-        var body = [];
-        res.on('data', function(chunk) {
-            body.push(chunk);
-        }).on('end', function() {
-            body = Buffer.concat(body).toString();
-            callback(body);
+const handlers = {
+    'LaunchRequest': function () {
+        this.emit('SayHello');
+    },
+    'HelloWorldIntent': function () {
+        this.emit('SayHello');
+    },
+    'SayHello': function () {
+        var alexaToken = this.event.context.System.apiAccessToken;
+        const lms = new Alexa.services.ListManagementService();
+        lms.getListsMetadata(alexaToken)
+        .then((data) => {
+            console.log('List retrieved: ' + JSON.stringify(data));
+            this.context.succeed();
+        })
+        .catch((error) => {
+            console.log(error.message);
         });
 
-        res.on('error', (e) => {
-            console.log(`Problem with request: ${e.message}`);
+        client
+            .api('/me')
+            .select("displayName")
+            .get()
+            .then((res) => {
+                console.log(res);
+                console.log(res.displayName);
+                this.response.speak('Hello ' + res.displayName + '!');
+                this.emit(':responseReady');
+            }).catch((err) => {
+                console.log(err);
+            });   
+    },
+
+    // Skill events
+    'AlexaSkillEvent.SkillEnabled' : function() {
+        const userId = this.event.context.System.user.userId;
+
+        console.log(`skill was enabled for user: ${userId}`);        
+    },
+    'AlexaSkillEvent.SkillDisabled' : function() {
+        const userId = this.event.context.System.user.userId;
+        
+        console.log(`skill was disabled for user: ${userId}`);
+    },
+    'AlexaSkillEvent.SkillPermissionAccepted' : function() {
+        const userId = this.event.context.System.user.userId;
+        const acceptedPermissions = JSON.stringify(this.event.request.body.acceptedPermissions);
+
+        console.log(`skill permissions were accepted for user ${userId}. New permissions: ${acceptedPermissions}`);
+    },
+    'AlexaSkillEvent.SkillPermissionChanged' : function() {
+        const userId = this.event.context.System.user.userId;
+        const acceptedPermissions = JSON.stringify(this.event.request.body.acceptedPermissions);
+
+        console.log(`skill permissions were changed for user ${userId}. New permissions: ${acceptedPermissions}`);
+    },
+    'AlexaSkillEvent.SkillAccountLinked' : function() {
+        const userId = this.event.context.System.user.userId;
+
+        console.log(`skill account was linked for user ${userId}`);
+    },
+
+    // Household list events
+    'AlexaHouseholdListEvent.ItemsCreated' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const listItemIds = this.event.request.body.listItemIds;
+        const status = STATUS.ACTIVE;
+
+        getListInfo(listId, status, consentToken, (list) => {
+            traverseListItems(listId, listItemIds, consentToken, (listItem) => {
+                const itemName = listItem.value;
+                console.log(`${itemName} was added to list ${list.name}`);
+            });
         });
-    }).end();
-};
+    },
+    'AlexaHouseholdListEvent.ItemsDeleted' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const listItemIds = this.event.request.body.listItemIds;
+        const status = STATUS.ACTIVE;
 
-/**
- * List API to retrieve the customer to-do list.
- */
-const getToDoList = function(token, callback) {
-    console.log("Starting get todo list call.");
+        getListInfo(listId, status, consentToken, (list) => {
+            console.log(`${listItemIds} was deleted from list ${list.name}`);
+        });
+    },
+    'AlexaHouseholdListEvent.ItemsUpdated' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const listItemIds = this.event.request.body.listItemIds;
+        const status = STATUS.ACTIVE;
 
-    getListsMetadata(token, function(returnValue) {
-        var obj = JSON.parse(returnValue);
-        var todo_path = "";
-        for (var i=0; i < obj.lists.length; i++) {
-        if (obj.lists[i].name === "Alexa shopping list") {
-	    //if (obj.lists[i].name === "Alexa to-do list") {
-                for (var j=0; j < obj.lists[i].statusMap.length; j++) {
-                    if (obj.lists[i].statusMap[j].status === "active") {
-                        todo_path = obj.lists[i].statusMap[j].href;
-                        break;
-		            }
-	        	}
-                break;
-	        }
-	    }
-
-        var options = {
-           host: api_url,
-           port: api_port,
-           path: todo_path,
-           method: 'GET',
-           headers: {
-               'Authorization': 'Bearer ' + token,
-               'Content-Type': 'application/json'
-            }
-        };
-
-        var req = https.request(options, (res) => {
-            console.log('STATUS: ', res.statusCode);
-            console.log('HEADERS: ', JSON.stringify(res.headers));
-    
-            if(res.statusCode === 403) {
-               console.log("permissions are not granted");
-               callback(null);
-               return;
-            }
-    
-            var body = [];
-            res.on('data', function(chunk) {
-                body.push(chunk);
-            }).on('end', function() {
-                body = Buffer.concat(body).toString();
-                callback(JSON.parse(body));
+        getListInfo(listId, status, consentToken, (list) => {
+            traverseListItems(listId, listItemIds, consentToken, (listItem) => {
+                const itemName = listItem.value;
+                console.log(`${itemName} was updated on list ${list.name}`);
             });
-    
-            res.on('error', (e) => {
-                console.log(`Problem with request: ${e.message}`);
-            });
-        }).end();
-    });
+        });
+    },
+    'AlexaHouseholdListEvent.ListCreated' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const status = STATUS.ACTIVE;
+        
+        getListInfo(listId, status, consentToken, (list) => {
+            console.log(`list ${list.name} was created`);
+        });
+    },
+    'AlexaHouseholdListEvent.ListUpdated' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const status = STATUS.ACTIVE;
+
+        getListInfo(listId, status, consentToken, (list) => {
+            console.log(`list ${list.name} was updated`);
+        });
+    },
+    'AlexaHouseholdListEvent.ListDeleted' : function() {
+        const listId = this.event.request.body.listId;
+        const consentToken = this.event.context.System.apiAccessToken;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const status = STATUS.ACTIVE;
+
+        console.log(`list ${listId} was deleted`);
+    },
 };
-
-/**
- * Helper function to retrieve the top to-do item.
- */
-const getTopToDoItem = function(token, callback) {
-    getToDoList(token, function(returnValue) {
-        if(!returnValue) {
-           callback(null);
-        }
-        else if(!returnValue.items || returnValue.items.length === 0) {
-           callback(list_is_empty);
-        }
-        else {
-           callback(returnValue.items[0].value);
-        }
-    });
-};
-
-/**
- * List API to delete the top todo item.
- */
-const clearTopToDoAction = function(token, callback) {
-    getToDoList(token, function(returnValue) {
-        if(!returnValue) {
-	    callback(null);
-	    return;
-	}
-	else if(!returnValue.items || returnValue.items.length === 0) {
-	    callback(list_is_empty);
-	    return;
-	}
-
-	var path = "/v2/householdlists/_listId_/items/_itemId_";
-	path = path.replace("_listId_", returnValue.listId);
-	path = path.replace("_itemId_", returnValue.items[0].id);
-
-	var options = {
-	    host: api_url,
-	    port: api_port,
-	    path: path,
-	    method: 'DELETE',
-	    headers: {
-		'Authorization': 'Bearer ' + token,
-		'Content-Type': 'application/json'
-	    }
-	};
-
-	var req = https.request(options, (res) => {
-		console.log('STATUS: ', res.statusCode);
-		console.log('HEADERS: ', JSON.stringify(res.headers));
-
-		if(res.statusCode === 403) {
-		    console.log("permissions are not granted");
-		    callback(null);
-		    return;
-		}
-
-		var body = [];
-		res.on('data', function(chunk) {
-		    body.push(chunk);
-		}).on('end', function() {
-		    body = Buffer.concat(body).toString();
-		    callback(res.statusCode);
-		});
-
-		res.on('error', (e) => {
-		    console.log(`Problem with request: ${e.message}`);
-		});
-
-	    }).end();
-	});
-};
-
-// Define events
-const NEW_SESSION = "NewSession";
-const LAUNCH_REQUEST = "LaunchRequest";
-const SESSION_ENDED = "SessionEndedRequest";
-const UNHANDLED = "Unhandled";
-const ITEM_CREATED = "AlexaHouseholdListEvent.ItemsCreated";
-
-// Define intents
-const ADD_TO_INTENT = "AddToIntent";
-const AMAZON_HELP = "AMAZON.HelpIntent";
-const AMAZON_CANCEL = "AMAZON.CancelIntent";
-const AMAZON_STOP = "AMAZON.StopIntent";
-
-const handlers = {};
-
-// Event handlers
-handlers[NEW_SESSION] = newSessionRequestHandler;
-handlers[LAUNCH_REQUEST] = launchRequestHandler;
-handlers[SESSION_ENDED] = sessionEndedRequestHandler;
-handlers[UNHANDLED] = unhandledRequestHandler;
-handlers[ITEM_CREATED] = itemCreatedHandler;
-
-// Intent handlers
-handlers[ADD_TO_INTENT] = addToIntentHandler;
-handlers[AMAZON_CANCEL] = amazonCancelHandler;
-handlers[AMAZON_STOP] = amazonStopHandler;
-handlers[AMAZON_HELP] = amazonHelpHandler;
-
