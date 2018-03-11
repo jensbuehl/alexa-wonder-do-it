@@ -79,7 +79,7 @@ const getListInfo = (listId, status, consentToken, callback) => {
 exports.handler = function(event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
 
-    console.log("rhis.event = " + JSON.stringify(event));
+    console.log("this.event = " + JSON.stringify(event));
 
     alexa.appId = APP_ID;
     alexa.resources = languageStrings;
@@ -101,6 +101,7 @@ exports.handler = function(event, context, callback) {
 
             // Initialize the Microsoft Graph client
             client = MicrosoftGraph.Client.init({
+                defaultVersion: 'beta',
                 authProvider: (done) => {
                     done(null, graphToken);
                 }
@@ -119,21 +120,14 @@ const handlers = {
     'LaunchRequest': function () {
         this.emit('SayHello');
     },
-    'HelloWorldIntent': function () {
-        this.emit('SayHello');
+    'SessionEndedRequest': function () {
+        this.emit(':tell', this.t('STOP_MESSAGE'));
+    },
+    'UnhandledRequest': function () {
+        var speechOutput = "Denk nach! Denk nach! Diese Anfrage kann ich leider nicht bearbeiten.";
+        this.emit(':tell', speechOutput);
     },
     'SayHello': function () {
-        var alexaToken = this.event.context.System.apiAccessToken;
-        const lms = new Alexa.services.ListManagementService();
-        lms.getListsMetadata(alexaToken)
-        .then((data) => {
-            console.log('List retrieved: ' + JSON.stringify(data));
-            this.context.succeed();
-        })
-        .catch((error) => {
-            console.log(error.message);
-        });
-
         client
             .api('/me')
             .select("displayName")
@@ -141,7 +135,7 @@ const handlers = {
             .then((res) => {
                 console.log(res);
                 console.log(res.displayName);
-                this.response.speak('Hello ' + res.displayName + '!');
+                this.response.speak('Hallo ' + res.displayName);
                 this.emit(':responseReady');
             }).catch((err) => {
                 console.log(err);
@@ -183,14 +177,31 @@ const handlers = {
         const consentToken = this.event.context.System.apiAccessToken;
         const apiEndpoint = this.event.context.System.apiEndpoint;
         const listItemIds = this.event.request.body.listItemIds;
+        const listClient = new Alexa.services.ListManagementService();
         const status = STATUS.ACTIVE;
 
         getListInfo(listId, status, consentToken, (list) => {
             traverseListItems(listId, listItemIds, consentToken, (listItem) => {
                 const itemName = listItem.value;
                 console.log(`${itemName} was added to list ${list.name}`);
+                listClient.deleteListItem(listId, listItem.id, consentToken);
+                //TODO: Handle response
+
+                //TODO: Map Alexa default lists to MS-ToDo lists
+                const taskItem = {
+                    "Subject": itemName,
+                };
+
+                client
+                .api('/me/outlook/tasks')
+                .post(taskItem)
+                .then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                });
             });
-        });
+        });    
     },
     'AlexaHouseholdListEvent.ItemsDeleted' : function() {
         const listId = this.event.request.body.listId;
