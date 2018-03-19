@@ -7,7 +7,7 @@ const STATUS = {
     ACTIVE: 'active',
     COMPLETED: 'completed'
 };
-
+ 
 const api_url = 'api.amazonalexa.com';
 const api_port = '443';
 const APP_ID = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
@@ -19,16 +19,30 @@ var client = {};
 // Log level definitions
 var logLevels = {error: 3, warn: 2, info: 1, debug: 0};
 
-// Language strings, as of now only German is supported
+// Language strings
 const languageStrings = {
     'de': {
         translation: {
-            SKILL_NAME: 'Wunder Todo',
-            WELCOME_MESSAGE: 'Willkommen bei Wunder Todo! ...Wie kann ich dir helfen, Uschi?',
-            HELP_MESSAGE: 'Du kannst sagen, „Schreibe Brot auf Einkaufsliste“ ...Wie kann ich dir helfen?',
-            HELP_REPROMPT: 'Wie kann ich dir helfen, Uschi?',
+            SKILL_NAME: 'Wunder To-Do',
+            WELCOME_MESSAGE: 'Willkommen bei Wunder To-Do! ...Füge mit Alexa neue Elemente zu deinen Listen hinzu! Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
+            HELP_MESSAGE: 'Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
+            HELP_REPROMPT: 'Füge mit Alexa neue Elemente zu deinen Listen hinzu!',
             STOP_MESSAGE: 'Auf Wiedersehen!',
-            ERROR_MESSAGE: 'Es tut mir leid. Ich habe im Moment technische Probleme.'
+            ERROR_MESSAGE: 'Es tut mir leid. Ich habe im Moment technische Probleme.',
+            LINK_ACCOUNT_MESSAGE: 'Um diesen Skill benutzen zu können, nutze bitte die Alexa-App um dein Konto zu verknüpfen. Weitere Informationen findest du auf deiner Alexa-Startseite.',
+            SHOPPING_LIST: 'Einkaufsliste'
+        },
+    },
+    'en': {
+        translation: {
+            SKILL_NAME: 'Wonder To-Do',
+            WELCOME_MESSAGE: 'Welcome to Wonder To-Do (Inofficial)! Use Alexa to add new elements to your lists! You could say, "Put bread on my shopping list" or "Add shopping to my todo list"',
+            HELP_MESSAGE: 'You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
+            HELP_REPROMPT: 'Use Alexa to add new elements to your lists!',
+            STOP_MESSAGE: 'Good bye!',
+            ERROR_MESSAGE: 'I am sorry. I cannot handle your request due to technical difficulties.',
+            LINK_ACCOUNT_MESSAGE: 'To start using this skill, please use the companion app to authenticate on Amazon. More information has been send to your Alexa-Home.',
+            SHOPPING_LIST: 'Shopping list'
         },
     },
 };
@@ -76,10 +90,76 @@ const getListInfo = (listId, status, consentToken, callback) => {
     });
 };
 
+/**
+ * Adds an outlookTask to the given target list by name. If the list does not 
+ * exist it will be created.
+ * 
+ * @param {String} listName list name to which the item shall be added
+ * @param {outlookTask} taskItem task item which shall be added
+ * @param {String} consentToken consent token from Alexa request
+*/
+const addToList = (listName, taskItem, consentToken) => {
+    //Get listId
+    var filter = `startswith(name,'${listName}')`;
+    client
+    .api('/me/outlook/taskFolders')
+    .filter(filter)
+    .count(true)
+    .get()
+    .then((res) => {
+        console.log(res);
+        if (res["@odata.count"] > 0) {
+            //Add to existing list
+            client
+            .api(`/me/outlook/taskFolders/${res.value[0].id}/tasks`)
+            .post(taskItem)
+            .then((res) => {
+                console.log(`${res.subject} was added to list ${listName}`);
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else {
+            //Create new list
+            const listItem = {
+                "name": listName,
+            };
+            client
+            .api(`/me/outlook/taskFolders`)
+            .post(listItem)
+            .then((res) => {
+                console.log(`${listName} was created`);
+                //Add to created list
+                client
+                .api(`/me/outlook/taskFolders/${res.id}/tasks`)
+                .post(taskItem)
+                .then((res) => {
+                    console.log(`${res.subject} was added to list ${listName}`);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            });
+        }
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });   
+};
+
+/**
+ * Capitalizes the first character of the input string
+ *
+ * @param {String} itemToAdd itemToAdd which shall be split into several items
+ * @returns {String} the capitalized string
+ */
+function capitalizeFirstLetter(itemToAdd) {
+    return itemToAdd.charAt(0).toUpperCase() + itemToAdd.slice(1);
+}
+
 exports.handler = function(event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
 
     console.log("this.event = " + JSON.stringify(event));
+    console.log("this.context = " + JSON.stringify(context));
 
     alexa.appId = APP_ID;
     alexa.resources = languageStrings;
@@ -95,7 +175,6 @@ exports.handler = function(event, context, callback) {
 
         // Validate Microsoft Graph API access token
         var graphToken = event.context.System.user.accessToken;
-        //var graphToken = event.session.user.accessToken;
         if (graphToken) {
             console.log("Microsoft Graph API Auth Token: " + graphToken, logLevels.debug);
 
@@ -107,41 +186,50 @@ exports.handler = function(event, context, callback) {
                 }
             });        
         } else {
-            console.log("Microsoft Graph permissions are not defined!");
+            //if no amazon token, return a LinkAccount card
+            console.log("Account not linked properly. Microsoft Graph permissions are not defined!");
         }    
         alexa.execute();
     } catch (err){
         console.error('Caught Error: ' + err);
-        alexa.emit(':tell', t('ERROR_MESSAGE'));
+        return;
     }
 };
 
 const handlers = {
+    //Default events
     'LaunchRequest': function () {
-        this.emit('SayHello');
+        var graphToken = this.event.context.System.user.accessToken;
+        if (graphToken) {
+            this.response.speak(this.t('WELCOME_MESSAGE'));
+            this.emit(':responseReady');       
+        } else {
+            //if no amazon token, return a LinkAccount card
+            this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT_MESSAGE'));
+            return;
+        }            
     },
     'SessionEndedRequest': function () {
-        this.emit(':tell', this.t('STOP_MESSAGE'));
+        this.response.speak(this.t('STOP_MESSAGE'));
+        this.emit(':responseReady');
     },
     'UnhandledRequest': function () {
-        var speechOutput = "Denk nach! Denk nach! Diese Anfrage kann ich leider nicht bearbeiten.";
-        this.emit(':tell', speechOutput);
+        this.response.speak(this.t('ERROR_MESSAGE'));
+        this.emit(':responseReady');
     },
-    'SayHello': function () {
-        client
-            .api('/me')
-            .select("displayName")
-            .get()
-            .then((res) => {
-                console.log(res);
-                console.log(res.displayName);
-                this.response.speak('Hallo ' + res.displayName);
-                this.emit(':responseReady');
-            }).catch((err) => {
-                console.log(err);
-            });   
+    //Default intents
+    'AMAZON.HelpIntent': function () {    
+        this.response.speak(this.t('HELP_MESSAGE'));
+        this.emit(':responseReady');
     },
-
+    'AMAZON.StopIntent': function () {
+        this.response.speak(this.t('STOP_MESSAGE'));
+        this.emit(':responseReady');
+    },
+    'AMAZON.CancelIntent': function () {
+        this.response.speak(this.t('STOP_MESSAGE'));
+        this.emit(':responseReady');
+    },
     // Skill events
     'AlexaSkillEvent.SkillEnabled' : function() {
         const userId = this.event.context.System.user.userId;
@@ -182,24 +270,45 @@ const handlers = {
 
         getListInfo(listId, status, consentToken, (list) => {
             traverseListItems(listId, listItemIds, consentToken, (listItem) => {
-                const itemName = listItem.value;
-                console.log(`${itemName} was added to list ${list.name}`);
-                listClient.deleteListItem(listId, listItem.id, consentToken);
-                //TODO: Handle response
+				const itemName = listItem.value;
+				
+				//Split and loop over list
+				itemName.split(/ and | und /).forEach(function(entry) {
+					//Make first letter upper case
+                    var capitalizedEntry = capitalizeFirstLetter(entry);
+					listClient.deleteListItem(listId, listItem.id, consentToken)
+					.then((res) => {
+						console.log(res);
+					}).catch((err) => {
+						console.log(err);
+					});
 
-                //TODO: Map Alexa default lists to MS-ToDo lists
-                const taskItem = {
-                    "Subject": itemName,
-                };
+					//Create task item
+					const taskItem = {
+						"Subject": capitalizedEntry,
+					};
 
-                client
-                .api('/me/outlook/tasks')
-                .post(taskItem)
-                .then((res) => {
-                    console.log(res);
-                }).catch((err) => {
-                    console.log(err);
-                });
+					//Add to default To-Do list
+					if (list.name === "Alexa to-do list"){
+							client
+                            .api(`/me/outlook/tasks`)
+                            .post(taskItem)
+                            .then((res) => {
+                                console.log(`${capitalizedEntry} was added to default To-Do list}`);
+                            }).catch((err) => {
+                                console.log(err);
+						});
+					} 
+					//Add to shopping list or create if not exists
+					else if (list.name === "Alexa shopping list"){
+						//TODO: Use translation once clarified how to resolve missing locale information
+						addToList(list.name, taskItem, consentToken)
+					} 
+					//Add to custom named list or create if not exists
+					else {
+						addToList(list.name, taskItem, consentToken)
+					}
+				});
             });
         });    
     },
