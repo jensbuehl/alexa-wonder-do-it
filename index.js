@@ -24,7 +24,7 @@ const languageStrings = {
     'de': {
         translation: {
             SKILL_NAME: 'Wunder To-Do',
-            WELCOME_MESSAGE: 'Willkommen bei Wunder To-Do! ...Füge mit Alexa neue Elemente zu deinen Listen hinzu! Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
+            WELCOME_MESSAGE: 'Willkommen bei Wunder To-Do! Füge mit Alexa neue Elemente zu deinen Listen hinzu! Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
             HELP_MESSAGE: 'Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
             HELP_REPROMPT: 'Füge mit Alexa neue Elemente zu deinen Listen hinzu!',
             STOP_MESSAGE: 'Auf Wiedersehen!',
@@ -35,11 +35,11 @@ const languageStrings = {
     },
     'en': {
         translation: {
-            SKILL_NAME: 'Wonder To-Do',
-            WELCOME_MESSAGE: 'Welcome to Wonder To-Do (Inofficial)! Use Alexa to add new elements to your lists! You could say, "Put bread on my shopping list" or "Add shopping to my todo list"',
+            SKILL_NAME: 'Wonder Do It',
+            WELCOME_MESSAGE: 'Welcome to Wonder Do It! Use Alexa to add new elements to your lists! You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
             HELP_MESSAGE: 'You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
             HELP_REPROMPT: 'Use Alexa to add new elements to your lists!',
-            STOP_MESSAGE: 'Good bye!',
+            STOP_MESSAGE: 'Goodbye!',
             ERROR_MESSAGE: 'I am sorry. I cannot handle your request due to technical difficulties.',
             LINK_ACCOUNT_MESSAGE: 'To start using this skill, please use the companion app to authenticate on Amazon. More information has been send to your Alexa-Home.',
             SHOPPING_LIST: 'Shopping list'
