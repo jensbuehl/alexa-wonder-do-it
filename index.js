@@ -29,6 +29,8 @@ const languageStrings = {
             HELP_REPROMPT: 'Füge mit Alexa neue Elemente zu deinen Listen hinzu!',
             STOP_MESSAGE: 'Auf Wiedersehen!',
             ERROR_MESSAGE: 'Es tut mir leid. Ich habe im Moment technische Probleme.',
+            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Fehlende Berechtigungen',
+            PERMISSIONS_MISSING_MESSAGE: 'Um diesen Skill benutzen zu können, nutze bitte die Alexa-App um die Berechtigungen für den Listenzugriff zu erteilen.',
             LINK_ACCOUNT_MESSAGE: 'Um diesen Skill benutzen zu können, nutze bitte die Alexa-App um dein Konto zu verknüpfen. Weitere Informationen findest du auf deiner Alexa-Startseite.',
             SHOPPING_LIST: 'Einkaufsliste'
         },
@@ -40,6 +42,8 @@ const languageStrings = {
             HELP_MESSAGE: 'You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
             HELP_REPROMPT: 'Use Alexa to add new elements to your lists!',
             STOP_MESSAGE: 'Goodbye!',
+            PERMISSIONS_MISSING_CARD_TITLE: 'Wonder Do It - Missing permissions',
+            PERMISSIONS_MISSING_MESSAGE: 'To start using this skill, please use the companion app to accept the required list access permissions.',
             ERROR_MESSAGE: 'I am sorry. I cannot handle your request due to technical difficulties.',
             LINK_ACCOUNT_MESSAGE: 'To start using this skill, please use the companion app to authenticate on Amazon. More information has been send to your Alexa-Home.',
             SHOPPING_LIST: 'Shopping list'
@@ -199,15 +203,28 @@ exports.handler = function(event, context, callback) {
 const handlers = {
     //Default events
     'LaunchRequest': function () {
-        var graphToken = this.event.context.System.user.accessToken;
-        if (graphToken) {
-            this.response.speak(this.t('WELCOME_MESSAGE'));
-            this.emit(':responseReady');       
-        } else {
-            //if no amazon token, return a LinkAccount card
-            this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT_MESSAGE'));
-            return;
-        }            
+        if (this.event.context.System.user.permissions) {
+            const graphToken = this.event.context.System.user.accessToken;
+            const alexaToken = this.event.context.System.apiAccessToken;
+            const consentToken = this.event.context.System.user.permissions.consentToken;
+            if (graphToken && alexaToken && consentToken) {
+                this.response.speak(this.t('WELCOME_MESSAGE'));
+                this.emit(':responseReady');       
+            } else {
+                //if no amazon token, return a LinkAccount card
+                this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT_MESSAGE'));
+                return;                
+            }     
+        }     
+        else {
+            //List access permissions
+            const speechOutput = this.t('PERMISSIONS_MISSING_MESSAGE'); 
+            const cardTitle = this.t('PERMISSIONS_MISSING_CARD_TITLE'); 
+            const cardContent = this.t('PERMISSIONS_MISSING_MESSAGE'); 
+
+            this.response.speak(speechOutput).cardRenderer(cardTitle, cardContent);
+            this.emit(':responseReady');
+        }    
     },
     'SessionEndedRequest': function () {
         this.response.speak(this.t('STOP_MESSAGE'));
