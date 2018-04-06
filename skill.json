@@ -3,7 +3,7 @@
     "publishingInformation": {
       "locales": {
         "de-DE": {
-          "summary": "Dieser Skill ermöglicht die inoffizielle Integration mit Microsoft To-Do.",
+          "summary": "Dieser Skill ermöglicht die Integration mit Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, starte Wunder To Do.",
             "Alexa, schreibe Sport und Einkaufen auf die Aufgabenliste.",
@@ -17,11 +17,11 @@
           ],
           "name": "Wunder To-Do",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/7f6c/e71214a6a8544dd298e9068ea67ba1bd/APP_ICON?versionId=NBUipNsU2LMt46Pw7B91QNyCgD8JRpPQ&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=LsLdVkwuH7l9QqNtdpKGl1LpWfc%3D",
-          "description": "Dieser Skill ermöglicht die inoffizielle Integration mit Microsoft To-Do und leitet hinzugefügte Listeneinträge an Ihre Microsoft To-Do Listen weiter.\n\nFür die Integration wird ein aktiver Microsoft Account benötigt, welcher mit dem Skill verbunden werden muss.\n\nFolgende Funktionalität wird unterstützt:\n- Alexa To-Do Elemente werden zur Standard Microsoft \"To-Do Liste\" hinzugefügt.\n- Alexa Einkaufslisten-Elemente werden zur \"Alexa shopping list\" weitergeleitet. Wenn diese noch nicht exisitert, so wird diese erzeugt. \n- Es können mehrere Elemente auf einmal hinzugefügt werden (Trennwort \"und\")\n- Das ursprüngliche Alexa-Element wird nach der Weiterleitung gelöscht.",
+          "description": "Dieser Skill ermöglicht die Integration mit Microsoft To-Do und leitet hinzugefügte Listeneinträge an Ihre Microsoft To-Do Listen weiter.\nFür die Integration wird ein aktiver Microsoft Account benötigt, welcher mit dem Skill verbunden werden muss.\n\nFolgende Funktionalität wird unterstützt:\n- Alexa To-Do Elemente werden zur Standard Microsoft \"To-Do Liste\" hinzugefügt.\n- Alexa Einkaufslisten-Elemente werden zur Microsoft To-Do Einkaufsliste weitergeleitet. Wenn diese noch nicht exisitert, so wird diese erzeugt. \n- Es können mehrere Elemente auf einmal hinzugefügt werden (Trennwort \"und\")\n- Das ursprüngliche Alexa-Element wird nach der Weiterleitung gelöscht.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/df27/178d4b988326471da113eb730a0cdf30/APP_ICON_LARGE?versionId=TNrXNhiAk4aWiDX0isebk_x0SOeyYTK6&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=LGjUsl%2FWK3E7SsDdgTY3VkVSCNY%3D"
         },
         "en-US": {
-          "summary": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial).",
+          "summary": "This skill integrates Alexa-Lists with Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, start Wonder Do It.",
             "Alexa, add sports and gym on my to do list.",
@@ -38,11 +38,11 @@
           ],
           "name": "Wonder Do It",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/bffe/c57e9e243782431bbde0172704f81d9e/APP_ICON?versionId=gM2bsMzKO071zDAFFToJAYxT0QN6pKa2&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=QgvS4L7kp3wF%2F9yvHUoOsgEuEvI%3D",
-          "description": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial)and forwards Alexa list entries to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do (Inofficial).\n\nThe skill will:\n- forward Alexa To-Do list items to the default Microsoft To-Do list.\n- forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list \"Alexa shopping list\" will be created if it is not available, yet.\n- Multiple elements can be added with one command\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
+          "description": "This skill integrates Alexa-Lists with Microsoft To-Do and forwards Alexa list elements to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do.\n\nThe skill supports the following:\n- Forward Alexa To-Do list items to the default Microsoft To-Do list.\n- Forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list will be created if it is not available, yet.\n- Multiple elements can be added with one command (concatenate elements with 'and')\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/2513/38261e794f644d899cf06b656e985a25/APP_ICON_LARGE?versionId=xPfDvx7cmNmSrkpkLibqsRKfVFWoDQKn&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=oXbmOlgFvgceHVwoeatHiN1FYbM%3D"
         },
         "en-CA": {
-          "summary": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial).",
+          "summary": "This skill integrates Alexa-Lists with Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, start Wonder Do It.",
             "Alexa, add sports and gym on my to do list.",
@@ -59,11 +59,11 @@
           ],
           "name": "Wonder Do It",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/bffe/c57e9e243782431bbde0172704f81d9e/APP_ICON?versionId=gM2bsMzKO071zDAFFToJAYxT0QN6pKa2&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=QgvS4L7kp3wF%2F9yvHUoOsgEuEvI%3D",
-          "description": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial)and forwards Alexa list entries to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do (Inofficial).\n\nThe skill will:\n- forward Alexa To-Do list items to the default Microsoft To-Do list.\n- forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list \"Alexa shopping list\" will be created if it is not available, yet.\n- Multiple elements can be added with one command\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
+          "description": "This skill integrates Alexa-Lists with Microsoft To-Do and forwards Alexa list elements to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do.\n\nThe skill supports the following:\n- Forward Alexa To-Do list items to the default Microsoft To-Do list.\n- Forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list will be created if it is not available, yet.\n- Multiple elements can be added with one command (concatenate elements with 'and')\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/2513/38261e794f644d899cf06b656e985a25/APP_ICON_LARGE?versionId=xPfDvx7cmNmSrkpkLibqsRKfVFWoDQKn&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=oXbmOlgFvgceHVwoeatHiN1FYbM%3D"
         },
         "en-GB": {
-          "summary": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial).",
+          "summary": "This skill integrates Alexa-Lists with Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, start Wonder Do It.",
             "Alexa, add sports and gym on my to do list.",
@@ -80,11 +80,11 @@
           ],
           "name": "Wonder Do It",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/bffe/c57e9e243782431bbde0172704f81d9e/APP_ICON?versionId=gM2bsMzKO071zDAFFToJAYxT0QN6pKa2&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=QgvS4L7kp3wF%2F9yvHUoOsgEuEvI%3D",
-          "description": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial)and forwards Alexa list entries to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do (Inofficial).\n\nThe skill will:\n- forward Alexa To-Do list items to the default Microsoft To-Do list.\n- forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list \"Alexa shopping list\" will be created if it is not available, yet.\n- Multiple elements can be added with one command\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
+          "description": "This skill integrates Alexa-Lists with Microsoft To-Do and forwards Alexa list elements to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do.\n\nThe skill supports the following:\n- Forward Alexa To-Do list items to the default Microsoft To-Do list.\n- Forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list will be created if it is not available, yet.\n- Multiple elements can be added with one command (concatenate elements with 'and')\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/2513/38261e794f644d899cf06b656e985a25/APP_ICON_LARGE?versionId=xPfDvx7cmNmSrkpkLibqsRKfVFWoDQKn&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=oXbmOlgFvgceHVwoeatHiN1FYbM%3D"
         },
         "en-IN": {
-          "summary": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial).",
+          "summary": "This skill integrates Alexa-Lists with Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, start Wonder Do It.",
             "Alexa, add sports and gym on my to do list.",
@@ -101,11 +101,11 @@
           ],
           "name": "Wonder Do It",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/bffe/c57e9e243782431bbde0172704f81d9e/APP_ICON?versionId=gM2bsMzKO071zDAFFToJAYxT0QN6pKa2&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=QgvS4L7kp3wF%2F9yvHUoOsgEuEvI%3D",
-          "description": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial)and forwards Alexa list entries to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do (Inofficial).\n\nThe skill will:\n- forward Alexa To-Do list items to the default Microsoft To-Do list.\n- forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list \"Alexa shopping list\" will be created if it is not available, yet.\n- Multiple elements can be added with one command\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
+          "description": "This skill integrates Alexa-Lists with Microsoft To-Do and forwards Alexa list elements to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do.\n\nThe skill supports the following:\n- Forward Alexa To-Do list items to the default Microsoft To-Do list.\n- Forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list will be created if it is not available, yet.\n- Multiple elements can be added with one command (concatenate elements with 'and')\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/2513/38261e794f644d899cf06b656e985a25/APP_ICON_LARGE?versionId=xPfDvx7cmNmSrkpkLibqsRKfVFWoDQKn&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=oXbmOlgFvgceHVwoeatHiN1FYbM%3D"
         },
         "en-AU": {
-          "summary": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial).",
+          "summary": "This skill integrates Alexa-Lists with Microsoft To-Do.",
           "examplePhrases": [
             "Alexa, start Wonder Do It.",
             "Alexa, add sports and gym on my to do list.",
@@ -122,12 +122,12 @@
           ],
           "name": "Wonder Do It",
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/bffe/c57e9e243782431bbde0172704f81d9e/APP_ICON?versionId=gM2bsMzKO071zDAFFToJAYxT0QN6pKa2&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=QgvS4L7kp3wF%2F9yvHUoOsgEuEvI%3D",
-          "description": "Integrates Alexa-Lists with Microsoft To-Do (Inofficial)and forwards Alexa list entries to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do (Inofficial).\n\nThe skill will:\n- forward Alexa To-Do list items to the default Microsoft To-Do list.\n- forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list \"Alexa shopping list\" will be created if it is not available, yet.\n- Multiple elements can be added with one command\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
+          "description": "This skill integrates Alexa-Lists with Microsoft To-Do and forwards Alexa list elements to your Microsoft To-Do lists.\nA Microsoft account is required to use Microsoft To-Do.\n\nThe skill supports the following:\n- Forward Alexa To-Do list items to the default Microsoft To-Do list.\n- Forward Alexa Shopping list items to the Microsoft To-Do shopping list. A new shopping list will be created if it is not available, yet.\n- Multiple elements can be added with one command (concatenate elements with 'and')\n- The original Alexa item will be removed after forwarding to Microsoft To-Do.",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/2513/38261e794f644d899cf06b656e985a25/APP_ICON_LARGE?versionId=xPfDvx7cmNmSrkpkLibqsRKfVFWoDQKn&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1522742301&Signature=oXbmOlgFvgceHVwoeatHiN1FYbM%3D"
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Fixes in this release: Landing page has been added.\n\nA microsoft account is required in order to link to the MS-To-Do list.\nYour test account:\n\nname: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\nConcerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.",
+      "testingInstructions": "A microsoft account is required in order to link to the MS-To-Do list.\nYour test accounts:\n\nGERMANY\n:name: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\nCANADA\n:name: buehl.alexacertCA@outlook.com\npwd:  WunderCert2018!\n\nINDIA\n:name: buehl.alexacertIN@outlook.com\npwd:  WunderCert2018!\n\nAUSTRALIA\n:name: buehl.alexacertAUS@outlook.com\npwd:  WunderCert2018!\n\nUnited Kingdom\n:name: buehl.alexacertGB@outlook.com\npwd:  WunderCert2018!\n\nConcerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.",
       "category": "TO_DO_LISTS_AND_NOTES",
       "distributionMode": "PUBLIC",
       "distributionCountries": []
