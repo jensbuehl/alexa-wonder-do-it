@@ -127,7 +127,7 @@
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "A microsoft account is required in order to link to the MS-To-Do list.\nYour test accounts:\n\nGERMANY\n:name: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\nCANADA\n:name: buehl.alexacertCA@outlook.com\npwd:  WunderCert2018!\n\nINDIA\n:name: buehl.alexacertIN@outlook.com\npwd:  WunderCert2018!\n\nAUSTRALIA\n:name: buehl.alexacertAUS@outlook.com\npwd:  WunderCert2018!\n\nUnited Kingdom\n:name: buehl.alexacertGB@outlook.com\npwd:  WunderCert2018!\n\nConcerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.",
+      "testingInstructions": "A microsoft account is required in order to link to the MS-To-Do list.\nYour test account:\n\nname: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\nConcerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.",
       "category": "TO_DO_LISTS_AND_NOTES",
       "distributionMode": "PUBLIC",
       "distributionCountries": []
