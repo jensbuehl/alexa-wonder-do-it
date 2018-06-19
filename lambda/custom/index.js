@@ -62,8 +62,7 @@ const languageStrings = {
  * @param {String} consentToken consent token from Alexa request
  * @param {(String) => void} callback func for each list item
  */
-const traverseListItems = (listId, listItemIds, consentToken, callback) => {
-    const listClient = new Alexa.services.ListManagementService();
+const traverseListItems = (listId, listItemIds, consentToken, listClient, callback) => {
     listItemIds.forEach((itemId) => {
         const listRequest = listClient.getListItem(listId, itemId, consentToken);
 
@@ -84,8 +83,7 @@ const traverseListItems = (listId, listItemIds, consentToken, callback) => {
  * @param {String} consentToken consent token from Alexa request
  * @param {(String) => void} callback func for the list
  */
-const getListInfo = (listId, status, consentToken, callback) => {
-    const listClient = new Alexa.services.ListManagementService();
+const getListInfo = (listId, status, consentToken, listClient, callback) => {
     const listInfo = listClient.getList(listId, status, consentToken);
 
     listInfo.then((response) => {
@@ -112,7 +110,6 @@ const addToList = (listName, taskItem, consentToken) => {
     .count(true)
     .get()
     .then((res) => {
-        console.log(res);
         if (res["@odata.count"] > 0) {
             //Add to existing list
             client
@@ -223,9 +220,10 @@ const HouseHoldListListUpdatedEventHandler = {
 		const listId = handlerInput.requestEnvelope.request.body.listId;
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
+        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, (list) => {
+        getListInfo(listId, status, consentToken, listClient, (list) => {
             console.log(`list ${list.name} was updated`);
         });
     }
@@ -253,9 +251,10 @@ const HouseHoldListListCreatedEventHandler = {
 		const listId = handlerInput.requestEnvelope.request.body.listId;
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
+        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
         
-        getListInfo(listId, status, consentToken, (list) => {
+        getListInfo(listId, status, consentToken, listClient, (list) => {
             console.log(`list ${list.name} was created`);
         });
     }
@@ -270,10 +269,11 @@ const HouseHoldListItemsUpdatedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
+        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, (list) => {
-            traverseListItems(listId, listItemIds, consentToken, (listItem) => {
+        getListInfo(listId, status, consentToken, listClient, (list) => {
+            traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
                 const itemName = listItem.value;
                 console.log(`${itemName} was updated on list ${list.name}`);
             });
@@ -290,9 +290,10 @@ const HouseHoldListItemsDeletedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
+        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, (list) => {
+        getListInfo(listId, status, consentToken, listClient, (list) => {
             console.log(`${listItemIds} was deleted from list ${list.name}`);
         });
     }
@@ -303,15 +304,16 @@ const HouseHoldListItemsCreatedEventHandler = {
         return handlerInput.requestEnvelope.request.type === 'AlexaHouseholdListEvent.ItemsCreated';
     },
     handle(handlerInput) {
+        const attributes = handlerInput.attributesManager.getRequestAttributes();
 		const listId = handlerInput.requestEnvelope.request.body.listId;
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
-        const listClient = new Alexa.services.ListManagementService();
+        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, (list) => {
-            traverseListItems(listId, listItemIds, consentToken, (listItem) => {
+        getListInfo(listId, status, consentToken, listClient, (list) => {
+            traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
 				const itemName = listItem.value;
 				
 				//Split and loop over list
@@ -344,7 +346,8 @@ const HouseHoldListItemsCreatedEventHandler = {
 					//Add to shopping list or create if not exists
 					else if (list.name === "Alexa shopping list"){
 						//TODO: Use translation once clarified how to resolve missing locale information
-						addToList(list.name, taskItem, consentToken)
+                        addToList(list.name, taskItem, consentToken)
+                        //addToList(attributes.t('SHOPPING_LIST'), taskItem, consentToken)
 					} 
 					//Add to custom named list or create if not exists
 					else {
@@ -514,7 +517,6 @@ const AlexaListApiValidationInterceptor = {
 const GlobalEventLoggingInterceptor = {
     process(handlerInput) {
         console.log("handlerInput.RequestEnvelope = " + JSON.stringify(handlerInput.requestEnvelope));
-        console.log("handlerInput.Context = " + JSON.stringify(handlerInput.Context));
     },
 };
 
@@ -542,4 +544,5 @@ exports.handler = Alexa.SkillBuilders.custom()
          GlobalEventLoggingInterceptor,
          AlexaListApiValidationInterceptor)
      .withSkillId(appId)
+     .withApiClient(new Alexa.DefaultApiClient())
      .lambda();
