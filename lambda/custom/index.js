@@ -1,14 +1,19 @@
 'use strict';
-
 const Alexa = require('ask-sdk-core');
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 const api_url = 'api.amazonalexa.com';
 const api_port = '443';
 const appId = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
+
 // Microsoft Graph JavaScript SDK and client
 var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 var client = {};
+
+// My modules
+const listExtensions = require('./lib/listExtensions.js');
+const stringExtensions = require('./lib/stringExtensions.js');
+const translations = require('./lib/translations.js');
 
 //Status of list, either active or completed
 const STATUS = {
@@ -18,38 +23,6 @@ const STATUS = {
 
 // Log level definitions
 var logLevels = {error: 3, warn: 2, info: 1, debug: 0};
-
-// Language strings
-const languageStrings = {
-    'de': {
-        translation: {
-            SKILL_NAME: 'Wunder To-Do',
-            WELCOME_MESSAGE: 'Willkommen bei Wunder To-Do! Füge mit Alexa neue Elemente zu deinen Listen hinzu! Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
-            HELP_MESSAGE: 'Du kannst sagen, „Alexa, schreibe Brot auf Einkaufsliste“ oder "Alexa, schreibe Sport auf meine Aufgabenliste"',
-            HELP_REPROMPT: 'Füge mit Alexa neue Elemente zu deinen Listen hinzu!',
-            STOP_MESSAGE: 'Auf Wiedersehen!',
-            ERROR_MESSAGE: 'Es tut mir leid. Ich habe im Moment technische Probleme.',
-            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Fehlende Berechtigungen',
-            PERMISSIONS_MISSING_MESSAGE: 'Um diesen Skill benutzen zu können, nutze bitte die Alexa-App um die Berechtigungen für den Listenzugriff zu erteilen.',
-            LINK_ACCOUNT_MESSAGE: 'Um diesen Skill benutzen zu können, nutze bitte die Alexa-App um dein Konto zu verknüpfen. Weitere Informationen findest du auf deiner Alexa-Startseite.',
-            SHOPPING_LIST: 'Einkaufsliste'
-        },
-    },
-    'en': {
-        translation: {
-            SKILL_NAME: 'Wonder Do It',
-            WELCOME_MESSAGE: 'Welcome to Wonder Do It! Use Alexa to add new elements to your lists! You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
-            HELP_MESSAGE: 'You could say, "Alexa, put bread on my shopping list" or "Alexa, add shopping to my todo list"',
-            HELP_REPROMPT: 'Use Alexa to add new elements to your lists!',
-            STOP_MESSAGE: 'Goodbye!',
-            PERMISSIONS_MISSING_CARD_TITLE: 'Wonder Do It - Missing permissions',
-            PERMISSIONS_MISSING_MESSAGE: 'To start using this skill, please use the companion app to accept the required list access permissions.',
-            ERROR_MESSAGE: 'I am sorry. I cannot handle your request due to technical difficulties.',
-            LINK_ACCOUNT_MESSAGE: 'To start using this skill, please use the companion app to authenticate on Amazon. More information has been send to your Alexa-Home.',
-            SHOPPING_LIST: 'Shopping list'
-        },
-    },
-};
 
 //Helpers / Business logic
 /**
@@ -462,7 +435,7 @@ const LocalizationInterceptor = {
         const localizationClient = i18n.use(sprintf).init({
             lng: handlerInput.requestEnvelope.request.locale,
             overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
-            resources: languageStrings,
+            resources: translations,
             returnObjects: true
         });
 
