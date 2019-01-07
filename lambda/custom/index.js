@@ -120,16 +120,6 @@ const addToList = (listName, taskItem, consentToken) => {
     });   
 };
 
-/**
- * Capitalizes the first character of the input string
- *
- * @param {String} itemToAdd itemToAdd which shall be split into several items
- * @returns {String} the capitalized string
- */
-function capitalizeFirstLetter(itemToAdd) {
-    return itemToAdd.charAt(0).toUpperCase() + itemToAdd.slice(1);
-}
-
 //Skill event handlers
 const SkillEnabledEventHandler = {
     canHandle(handlerInput) {
@@ -292,7 +282,7 @@ const HouseHoldListItemsCreatedEventHandler = {
 				//Split and loop over list
 				itemName.split(/ and | und /).forEach(function(entry) {
 					//Make first letter upper case
-                    var capitalizedEntry = capitalizeFirstLetter(entry);
+                    var capitalizedEntry = stringExtensions.capitalizeFirstLetter(entry);
 					listClient.deleteListItem(listId, listItem.id, consentToken)
 					.then((res) => {
 						console.log(res);
