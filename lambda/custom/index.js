@@ -11,7 +11,8 @@ var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 var client = {};
 
 // My modules
-const listExtensions = require('./lib/listExtensions.js');
+const alexaListHelper = require('./lib/alexaListHelper.js');
+const graphListHelper = require('./lib/graphListHelper.js');
 const stringExtensions = require('./lib/stringExtensions.js');
 const translations = require('./lib/translations.js');
 
@@ -23,102 +24,6 @@ const STATUS = {
 
 // Log level definitions
 var logLevels = {error: 3, warn: 2, info: 1, debug: 0};
-
-//Helpers / Business logic
-/**
- * Fetches list item information for each listItem in listItemIds. Executes the
- * callback function with the response back from api.amazonalexa.com
- * for each item in the list.
- *
- * @param {String} listId list id to check
- * @param {String[]} listItemIds list item ids in the request
- * @param {String} consentToken consent token from Alexa request
- * @param {(String) => void} callback func for each list item
- */
-const traverseListItems = (listId, listItemIds, consentToken, listClient, callback) => {
-    listItemIds.forEach((itemId) => {
-        const listRequest = listClient.getListItem(listId, itemId, consentToken);
-
-        listRequest.then((response) => {
-            callback(response);
-        }).catch((err) => {
-            console.error(err);
-        });
-    });
-};
-
-/**
- * Fetches list information for given list id. Executes the
- * callback function with the response back from api.amazonalexa.com.
- *
- * @param {String} listId list id to check
- * @param {String} status specify either “active” or “completed” items.
- * @param {String} consentToken consent token from Alexa request
- * @param {(String) => void} callback func for the list
- */
-const getListInfo = (listId, status, consentToken, listClient, callback) => {
-    const listInfo = listClient.getList(listId, status, consentToken);
-
-    listInfo.then((response) => {
-        callback(response);
-    }).catch((err) => {
-        console.error(err);
-    });
-};
-
-/**
- * Adds an outlookTask to the given target list by name. If the list does not 
- * exist it will be created.
- * 
- * @param {String} listName list name to which the item shall be added
- * @param {outlookTask} taskItem task item which shall be added
- * @param {String} consentToken consent token from Alexa request
-*/
-const addToList = (listName, taskItem, consentToken) => {
-    //Get listId
-    var filter = `startswith(name,'${listName}')`;
-    client
-    .api('/me/outlook/taskFolders')
-    .filter(filter)
-    .count(true)
-    .get()
-    .then((res) => {
-        if (res["@odata.count"] > 0) {
-            //Add to existing list
-            client
-            .api(`/me/outlook/taskFolders/${res.value[0].id}/tasks`)
-            .post(taskItem)
-            .then((res) => {
-                console.log(`${res.subject} was added to list ${listName}`);
-            }).catch((err) => {
-                console.log(err);
-            });
-        } else {
-            //Create new list
-            const listItem = {
-                "name": listName,
-            };
-            client
-            .api(`/me/outlook/taskFolders`)
-            .post(listItem)
-            .then((res) => {
-                console.log(`${listName} was created`);
-                //Add to created list
-                client
-                .api(`/me/outlook/taskFolders/${res.id}/tasks`)
-                .post(taskItem)
-                .then((res) => {
-                    console.log(`${res.subject} was added to list ${listName}`);
-                }).catch((err) => {
-                    console.log(err);
-                });
-            });
-        }
-        console.log(res);
-    }).catch((err) => {
-        console.log(err);
-    });   
-};
 
 //Skill event handlers
 const SkillEnabledEventHandler = {
@@ -186,7 +91,7 @@ const HouseHoldListListUpdatedEventHandler = {
         const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, listClient, (list) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
             console.log(`list ${list.name} was updated`);
         });
     }
@@ -217,7 +122,7 @@ const HouseHoldListListCreatedEventHandler = {
         const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
         
-        getListInfo(listId, status, consentToken, listClient, (list) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
             console.log(`list ${list.name} was created`);
         });
     }
@@ -235,8 +140,8 @@ const HouseHoldListItemsUpdatedEventHandler = {
         const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, listClient, (list) => {
-            traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
+            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
                 const itemName = listItem.value;
                 console.log(`${itemName} was updated on list ${list.name}`);
             });
@@ -275,8 +180,8 @@ const HouseHoldListItemsCreatedEventHandler = {
         const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, listClient, (list) => {
-            traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
+            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
 				const itemName = listItem.value;
 				
 				//Split and loop over list
@@ -309,12 +214,11 @@ const HouseHoldListItemsCreatedEventHandler = {
 					//Add to shopping list or create if not exists
 					else if (list.name === "Alexa shopping list"){
 						//TODO: Use translation once clarified how to resolve missing locale information
-                        addToList(list.name, taskItem, consentToken)
-                        //addToList(attributes.t('SHOPPING_LIST'), taskItem, consentToken)
+                        graphListHelper.addToList(list.name, taskItem, consentToken)
 					} 
 					//Add to custom named list or create if not exists
 					else {
-						addToList(list.name, taskItem, consentToken)
+						graphListHelper.addToList(list.name, taskItem, consentToken)
 					}
 				});
             });
