@@ -6,9 +6,9 @@ const api_url = 'api.amazonalexa.com';
 const api_port = '443';
 const appId = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
 
-// Microsoft Graph JavaScript SDK and client
+// Microsoft Graph JavaScript SDK and graphClient
 var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
-var client = {};
+var graphClient = {};
 
 // My modules
 const alexaListHelper = require('./lib/alexaListHelper.js');
@@ -88,10 +88,10 @@ const HouseHoldListListUpdatedEventHandler = {
 		const listId = handlerInput.requestEnvelope.request.body.listId;
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
-        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
+        const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (list) => {
             console.log(`list ${list.name} was updated`);
         });
     }
@@ -119,10 +119,10 @@ const HouseHoldListListCreatedEventHandler = {
 		const listId = handlerInput.requestEnvelope.request.body.listId;
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
-        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
+        const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
         
-        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (list) => {
             console.log(`list ${list.name} was created`);
         });
     }
@@ -137,11 +137,11 @@ const HouseHoldListItemsUpdatedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
-        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
+        const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
-            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (list) => {
+            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, alexaListClient, (listItem) => {
                 const itemName = listItem.value;
                 console.log(`${itemName} was updated on list ${list.name}`);
             });
@@ -158,10 +158,10 @@ const HouseHoldListItemsDeletedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
-        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
+        const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        getListInfo(listId, status, consentToken, listClient, (list) => {
+        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (list) => {
             console.log(`${listItemIds} was deleted from list ${list.name}`);
         });
     }
@@ -177,18 +177,18 @@ const HouseHoldListItemsCreatedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
-        const listClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
+        const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
 
-        alexaListHelper.getListInfo(listId, status, consentToken, listClient, (list) => {
-            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, listClient, (listItem) => {
-				const itemName = listItem.value;
+        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (alexaList) => {
+            alexaListHelper.traverseListItems(listId, listItemIds, consentToken, alexaListClient, (listItem) => {
+				const alexaTaskName = listItem.value;
 				
 				//Split and loop over list
-				itemName.split(/ and | und /).forEach(function(entry) {
+				alexaTaskName.split(/ and | und /).forEach(function(entry) {
 					//Make first letter upper case
-                    var capitalizedEntry = stringExtensions.capitalize(entry);
-					listClient.deleteListItem(listId, listItem.id, consentToken)
+                    var alexaSplitTaskName = stringExtensions.capitalize(entry);
+					alexaListClient.deleteListItem(listId, listItem.id, consentToken)
 					.then((res) => {
 						console.log(res);
 					}).catch((err) => {
@@ -196,29 +196,21 @@ const HouseHoldListItemsCreatedEventHandler = {
 					});
 
 					//Create task item
-					const taskItem = {
-						"Subject": capitalizedEntry,
+					const graphTaskItem = {
+						"Subject": alexaSplitTaskName,
 					};
 
 					//Add to default To-Do list
-					if (list.name === "Alexa to-do list"){
-							client
-                            .api(`/me/outlook/tasks`)
-                            .post(taskItem)
-                            .then((res) => {
-                                console.log(`${capitalizedEntry} was added to default To-Do list}`);
-                            }).catch((err) => {
-                                console.log(err);
-						});
+					if (alexaList.name === "Alexa to-do list"){
+                        graphListHelper.addToDoItem(graphClient, graphTaskItem, consentToken);
 					} 
 					//Add to shopping list or create if not exists
-					else if (list.name === "Alexa shopping list"){
-						//TODO: Use translation once clarified how to resolve missing locale information
-                        graphListHelper.addToList(list.name, taskItem, consentToken)
+					else if (alexaList.name === "Alexa shopping list"){
+                        graphListHelper.addShoppingItem(graphClient, alexaList.name, graphTaskItem, consentToken)
 					} 
 					//Add to custom named list or create if not exists
 					else {
-						graphListHelper.addToList(list.name, taskItem, consentToken)
+						graphListHelper.addShoppingItem(graphClient, alexaList.name, graphTaskItem, consentToken)
 					}
 				});
             });
@@ -348,7 +340,7 @@ const MicrosoftGraphValidationInterceptor = {
                 console.log("Microsoft Graph API Auth Token: " + graphToken, logLevels.debug);
 
                 // Initialize the Microsoft Graph client
-                client = MicrosoftGraph.Client.init({
+                graphClient = MicrosoftGraph.Client.init({
                     defaultVersion: 'beta',
                     authProvider: (done) => {
                         done(null, graphToken);
