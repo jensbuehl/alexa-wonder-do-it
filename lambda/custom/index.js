@@ -187,7 +187,7 @@ const HouseHoldListItemsCreatedEventHandler = {
 				//Split and loop over list
 				itemName.split(/ and | und /).forEach(function(entry) {
 					//Make first letter upper case
-                    var capitalizedEntry = stringExtensions.capitalizeFirstLetter(entry);
+                    var capitalizedEntry = stringExtensions.capitalize(entry);
 					listClient.deleteListItem(listId, listItem.id, consentToken)
 					.then((res) => {
 						console.log(res);
