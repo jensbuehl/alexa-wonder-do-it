@@ -391,6 +391,7 @@ exports.handler = Alexa.SkillBuilders.custom()
          SkillDisabledEventHandler,
          SkillPermissionAcceptedEventHandler,
          SkillPermissionChangedEventHandler,
+         SkillAccountLinkedEventHandler,
          //List events
          HouseHoldListItemsCreatedEventHandler,
          HouseHoldListItemsDeletedEventHandler,
