@@ -1,12 +1,14 @@
 'use strict';
-const Alexa = require('ask-sdk-core');
-const i18n = require('i18next');
-const sprintf = require('i18next-sprintf-postprocessor');
+
+//Constants
 const api_url = 'api.amazonalexa.com';
 const api_port = '443';
 const appId = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
 
-// Microsoft Graph JavaScript SDK and graphClient
+//External modules
+const Alexa = require('ask-sdk-core');
+const i18n = require('i18next');
+const sprintf = require('i18next-sprintf-postprocessor');
 var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 var graphClient = {};
 
@@ -16,14 +18,11 @@ const graphListHelper = require('./lib/graphListHelper.js');
 const stringExtensions = require('./lib/stringExtensions.js');
 const translations = require('./lib/translations.js');
 
-//Status of list, either active or completed
+//Status of alexa list
 const STATUS = {
     ACTIVE: 'active',
     COMPLETED: 'completed'
 };
-
-// Log level definitions
-var logLevels = {error: 3, warn: 2, info: 1, debug: 0};
 
 //Skill event handlers
 const SkillEnabledEventHandler = {
@@ -190,14 +189,14 @@ const HouseHoldListItemsCreatedEventHandler = {
                     var alexaSplitTaskName = stringExtensions.capitalize(entry);
 					alexaListClient.deleteListItem(listId, listItem.id, consentToken)
 					.then((res) => {
-						console.log(res);
+						console.log(`${listItem.value} was removed from Alexa list`);
 					}).catch((err) => {
-						console.log(err);
+						console.log("Error when trying to remove item from Alexa list");
 					});
 
 					//Create task item
 					const graphTaskItem = {
-						"Subject": alexaSplitTaskName,
+						"subject": alexaSplitTaskName,
 					};
 
 					//Add to default To-Do list
@@ -337,7 +336,7 @@ const MicrosoftGraphValidationInterceptor = {
         try {
             var graphToken =handlerInput.requestEnvelope.context.System.user.accessToken;
             if (graphToken) {
-                console.log("Microsoft Graph API Auth Token: " + graphToken, logLevels.debug);
+                console.log("Microsoft Graph API Auth Token: " + graphToken);
 
                 // Initialize the Microsoft Graph client
                 graphClient = MicrosoftGraph.Client.init({
@@ -362,7 +361,7 @@ const AlexaListApiValidationInterceptor = {
         try {
             var alexaToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
             if (alexaToken) {
-                console.log("Alexa API Auth Token: " + alexaToken, logLevels.debug);
+                console.log("Alexa API Auth Token: " + alexaToken);
             } else {
                 console.log("Alexa list permissions are not defined!");
             }   
