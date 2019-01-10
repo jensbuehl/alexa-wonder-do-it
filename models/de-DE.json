@@ -21,6 +21,10 @@
           "samples": [
             "Stop"
           ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
         }
       ]
     }
