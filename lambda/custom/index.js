@@ -1,9 +1,17 @@
 'use strict';
 
 //Constants
-const api_url = 'api.amazonalexa.com';
-const api_port = '443';
-const appId = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
+const API_URL = 'api.amazonalexa.com';
+const API_PORT = '443';
+const APP_ID = 'amzn1.ask.skill.6afdb0f6-5d54-418a-81b1-7e4a0df32060';
+const STATUS = {
+    ACTIVE: 'active',
+    COMPLETED: 'completed'
+};
+const DEFAULT_ALEXA_LISTS = {
+    SHOPPING: 'Alexa shopping list',
+    TODO: 'Alexa to-do list'
+}
 
 //External modules
 const Alexa = require('ask-sdk-core');
@@ -17,12 +25,6 @@ const alexaListHelper = require('./lib/alexaListHelper.js');
 const graphListHelper = require('./lib/graphListHelper.js');
 const stringExtensions = require('./lib/stringExtensions.js');
 const translations = require('./lib/translations.js');
-
-//Status of alexa list
-const STATUS = {
-    ACTIVE: 'active',
-    COMPLETED: 'completed'
-};
 
 //Skill event handlers
 const SkillEnabledEventHandler = {
@@ -200,11 +202,11 @@ const HouseHoldListItemsCreatedEventHandler = {
 					};
 
 					//Add to default To-Do list
-					if (alexaList.name === "Alexa to-do list"){
+					if (alexaList.name === DEFAULT_ALEXA_LISTS.TODO){
                         graphListHelper.addToDoItem(graphClient, graphTaskItem, consentToken);
 					} 
 					//Add to shopping list or create if not exists
-					else if (alexaList.name === "Alexa shopping list"){
+					else if (alexaList.name === DEFAULT_ALEXA_LISTS.SHOPPING){
                         graphListHelper.addShoppingItem(graphClient, alexaList.name, graphTaskItem, consentToken)
 					} 
 					//Add to custom named list or create if not exists
@@ -402,6 +404,6 @@ exports.handler = Alexa.SkillBuilders.custom()
          MicrosoftGraphValidationInterceptor,
          GlobalEventLoggingInterceptor,
          AlexaListApiValidationInterceptor)
-     .withSkillId(appId)
+     .withSkillId(APP_ID)
      .withApiClient(new Alexa.DefaultApiClient())
      .lambda();
