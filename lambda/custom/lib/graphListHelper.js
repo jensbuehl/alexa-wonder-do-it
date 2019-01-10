@@ -97,6 +97,8 @@ function buildShoppingListFilter(listName){
     return `contains(name,'einkauf')
             or contains(name,'shop')
             or contains(name,'grocery')
+            or contains(name,'groceri')
+            or contains(name,'lebensmittel')
             or contains(name,'${listName}')`;
 }
 
@@ -130,16 +132,22 @@ async function createFolder(graphClient, listName){
 }
 
 async function handleDuplicates(graphClient, outlookTask, outlookTaskFolder){
-    var duplicates = getDuplicates(graphClient, outlookTask, outlookTaskFolder);
+    var duplicates = await getDuplicates(graphClient, outlookTask, outlookTaskFolder);
     if (duplicates["@odata.count"] > 0){
         //Set completed duplicate task back to notStarted
-         var duplicate = duplicates.value.find(x => x.status === "completed");
+        var duplicate = duplicates.value.find(x => x.status === "completed");
+        if (undefined === duplicate){
+            //No completed task found
+            return true
+        }
         duplicate.status = "notStarted";
         updateTask(graphClient, duplicate)
-
+        console.log("Duplicate found");
         return true;
     }
+    console.log("No duplicate found");
     return false;
+
 }
 
 async function getDuplicates(graphClient, outlookTask, outlookTaskFolder){
