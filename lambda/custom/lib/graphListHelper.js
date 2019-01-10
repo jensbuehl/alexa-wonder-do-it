@@ -117,6 +117,17 @@ async function getShoppingList(graphClient, listName){
     }
 }
 
+async function getCustomList(graphClient, listName){
+    var customListFilter = `startsWith(name,'${listName}')`;
+    var lists = await getFolders(graphClient, shoppingListFilter);
+    
+    if (lists["@odata.count"] > 0){
+        return lists.value[0];
+    } else {
+        return createFolder(graphClient, listName);
+    }
+}
+
 async function getDefaultFolder(graphClient){
     try {
         var allLists = await getFolders(graphClient,"");
@@ -168,8 +179,21 @@ const addShoppingItem = async (graphClient, alexaListName, outlookTask, consentT
     const outlookTaskFolder = await getShoppingList(graphClient, alexaListName); 
     if (false === await handleDuplicates(graphClient, outlookTask, outlookTaskFolder)){
         //No duplicates found!
-        addTask(graphClient, outlookTask, outlookTaskFolder);
+ 
+       addTask(graphClient, outlookTask, outlookTaskFolder);
     }
+};
+
+/**
+* Adds an outlookTask to the given target list by name. If the list does not exist it will be created.
+* @param graphClient Microsoft graph API client
+* @param {String} alexaListName list name to which the item shall be added
+* @param {outlookTask} outlookTask task item which shall be added
+* @param {String} consentToken consent token from Alexa request
+*/
+const addCustomTaskItem = async (graphClient, alexaListName, outlookTask, consentToken) => {
+    const outlookTaskFolder = await getCustomList(graphClient, alexaListName); 
+    addTask(graphClient, outlookTask, outlookTaskFolder);
 };
 
 /**
@@ -187,5 +211,6 @@ const addToDoItem = async (graphClient, outlookTask, consentToken) => {
 
 module.exports = {
     addShoppingItem,
-    addToDoItem
+    addToDoItem,
+    addCustomTaskItem
 };

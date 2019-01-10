@@ -211,7 +211,7 @@ const HouseHoldListItemsCreatedEventHandler = {
 					} 
 					//Add to custom named list or create if not exists
 					else {
-						graphListHelper.addShoppingItem(graphClient, alexaList.name, graphTaskItem, consentToken)
+						graphListHelper.addCustomTaskItem(graphClient, alexaList.name, graphTaskItem, consentToken)
 					}
 				});
             });
