@@ -142,10 +142,8 @@ async function handleDuplicates(graphClient, outlookTask, outlookTaskFolder){
         }
         duplicate.status = "notStarted";
         updateTask(graphClient, duplicate)
-        console.log("Duplicate found");
         return true;
     }
-    console.log("No duplicate found");
     return false;
 
 }
