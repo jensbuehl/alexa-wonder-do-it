@@ -76,7 +76,7 @@ const SkillAccountLinkedEventHandler = {
     handle(handlerInput) {
 		const userId = handlerInput.requestEnvelope.context.System.user.userId;
         const acceptedPermissions = JSON.stringify(handlerInput.requestEnvelope.request.body.acceptedPermissions);
-        console.log(`skill permissions were changed for user ${userId}. New permissions: ${acceptedPermissions}`);
+        console.log(`skill account linked for user ${userId}.`);
     }
 };
 
@@ -107,8 +107,6 @@ const HouseHoldListListDeletedEventHandler = {
         const consentToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
         const apiEndpoint = handlerInput.requestEnvelope.context.System.apiEndpoint;
         const status = STATUS.ACTIVE;
-
-        console.log(`list ${listId} was deleted`);
     }
 };
 
@@ -161,10 +159,6 @@ const HouseHoldListItemsDeletedEventHandler = {
         const listItemIds = handlerInput.requestEnvelope.request.body.listItemIds;
         const alexaListClient = handlerInput.serviceClientFactory.getListManagementServiceClient();
         const status = STATUS.ACTIVE;
-
-        alexaListHelper.getListInfo(listId, status, consentToken, alexaListClient, (list) => {
-            console.log(`${listItemIds} was deleted from list ${list.name}`);
-        });
     }
 };
 
