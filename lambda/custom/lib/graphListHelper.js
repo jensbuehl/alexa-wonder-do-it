@@ -98,6 +98,9 @@ function buildShoppingListFilter(listName){
             or contains(name,'shop')
             or contains(name,'grocery')
             or contains(name,'groceri')
+            or contains(name,'achat')
+            or contains(name,'magasin')
+            or contains(name,'courses')
             or contains(name,'lebensmittel')
             or contains(name,'${listName}')`;
 }
