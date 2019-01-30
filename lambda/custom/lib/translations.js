@@ -28,6 +28,20 @@ const translations = {
             SHOPPING_LIST: 'Shopping list'
         },
     },
+    'fr': {
+        translation: {
+            SKILL_NAME: 'To-Do Magique',
+            WELCOME_MESSAGE: 'Bienvenue à To-Do magique ! Utilisez Alexa pour ajouter de nouveaux items à vos listes ! Vous pouvez dire : "Alexa, ajoute pain à ma liste d\'achat" ou "Alexa, ajoute magasinage à ma liste de choses à faire".',
+            HELP_MESSAGE: 'Vous pouvez dire "Alexa, ajoute pain à ma liste d\'achats" ou "Alexa, ajoute magasinage à ma liste de choses à faire".',
+            HELP_REPROMPT: 'Utilisez Alexa pour ajouter de nouveaux items à vos listes !',
+            STOP_MESSAGE: 'Aurevoir!',
+            PERMISSIONS_MISSING_CARD_TITLE: 'To-Do Magique - Permissions insuffisantes',
+            PERMISSIONS_MISSING_MESSAGE: 'Pour démarrer l\'utilisation de cette skill, svp utiliser l\'application mobile Amazon Alexa pour accepter les permissions requises.',
+            ERROR_MESSAGE: 'Je suis désolé. Je ne peux prendre en charge votre requête en raison de difficultés techniques.',
+            LINK_ACCOUNT_MESSAGE: 'Pour démarrer l\'utilisation de cette skill, svp utiliser l\'application mobile Amazon Alexa pour vous authentifier avec Amazon. Plus d\'information a été envoyé à votre accueil Alexa.',
+            SHOPPING_LIST: 'liste d\'achats'
+        },
+    },
 };
 
 module.exports = translations;
