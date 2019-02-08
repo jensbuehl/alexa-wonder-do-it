@@ -95,13 +95,15 @@ async function addFolder(graphClient, outlookTaskFolder){
 
 function buildShoppingListFilter(listName){
     return `contains(name,'einkauf')
-            or contains(name,'shop')
-            or contains(name,'grocery')
-            or contains(name,'groceri')
-            or contains(name,'achat')
-            or contains(name,'magasin')
-            or contains(name,'courses')
-            or contains(name,'lebensmittel')
+            or contains(name,'shop') //en
+            or contains(name,'grocery') //en
+            or contains(name,'groceri') //en
+            or contains(name,'achat') //fr
+            or contains(name,'magasin') //fr
+            or contains(name,'courses') //fr
+            or contains(name,'compra') //es
+            or contains(name,'compra') //es
+            or contains(name,'spesa') //it
             or contains(name,'${listName}')`;
 }
 
