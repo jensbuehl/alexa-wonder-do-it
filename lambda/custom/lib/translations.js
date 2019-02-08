@@ -44,12 +44,12 @@ const translations = {
     },
     'it': {
         translation: {
-            SKILL_NAME: 'To-Do Miracolo',
-            WELCOME_MESSAGE: 'Benvenuto su To-Do Miracolo! Utilizza Alexa per aggiungere nuovi elementi alle tue liste! Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista To-do.',
+            SKILL_NAME: 'Wunder To-Do',
+            WELCOME_MESSAGE: 'Benvenuto su Wunder To-Do! Utilizza Alexa per aggiungere nuovi elementi alle tue liste! Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista To-do.',
             HELP_MESSAGE: 'Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista To-do.',
             HELP_REPROMPT: 'Usa Alexa per aggiungere nuovi elementi alle tue liste!',
             STOP_MESSAGE: 'Arrivederci!',
-            PERMISSIONS_MISSING_CARD_TITLE: 'To-Do Miracolo - Permessi mancanti',
+            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Permessi mancanti',
             PERMISSIONS_MISSING_MESSAGE: 'Per un corretto funzionamento della skill, perfavore accetta le  richieste di permessi dello step successivo.',
             ERROR_MESSAGE: 'Mi spiace, a causa di una difficoltà tecnica non posso aiutarti.',
             LINK_ACCOUNT_MESSAGE: 'Per utilizzare questa skill, perfavore segui lo step successivo per autenticarti con l\'account Amazon. Maggiori informazioni sono state spedite al vostro account Alexa.',
@@ -58,12 +58,12 @@ const translations = {
     },
     'es': {
         translation: {
-            SKILL_NAME: 'To-Do Maravillosa',
-            WELCOME_MESSAGE: '¡Bienvenido a To-Do Maravillosa! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
+            SKILL_NAME: 'Wunder To-Do',
+            WELCOME_MESSAGE: '¡Bienvenido a Wunder To-Do! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
             HELP_MESSAGE: 'Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
             HELP_REPROMPT: 'Utiliza a Alexa para agregar nuevos elementos a tus listas.',
             STOP_MESSAGE: '¡Hasta luego!',
-            PERMISSIONS_MISSING_CARD_TITLE: 'To-Do Maravillosa - Permisos insuficientes.',
+            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Permisos insuficientes.',
             PERMISSIONS_MISSING_MESSAGE: 'Para iniciar esta habilidad, favor de utilizar la aplicación móvil para confirmar los permisos de acceso a la lista requerida.',
             ERROR_MESSAGE: 'Lo siento, no puedo realizar esta tarea debido a problemas técnicos.',
             LINK_ACCOUNT_MESSAGE: 'Para utilizar esta habilidad, favor de utilizar la aplicación móvil de Alexa para autentificarte con tu cuenta de Amazon. Más detalles han sido enviados a tu página de inicio de Alexa.',
