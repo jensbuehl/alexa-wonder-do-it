@@ -66,7 +66,7 @@ const translations = {
             PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Permisos insuficientes.',
             PERMISSIONS_MISSING_MESSAGE: 'Para iniciar esta habilidad, favor de utilizar la aplicación móvil para confirmar los permisos de acceso a la lista requerida.',
             ERROR_MESSAGE: 'Lo siento, no puedo realizar esta tarea debido a problemas técnicos.',
-            LINK_ACCOUNT_MESSAGE: 'Para utilizar esta habilidad, favor de utilizar la aplicación móvil de Alexa para autentificarte con tu cuenta de Amazon. Más detalles han sido enviados a tu página de inicio de Alexa.',
+            LINK_ACCOUNT_MESSAGE: 'Para utilizar esta habilidad, favor de utilizar la aplicación móvil d\'Alexa para autentificarte con tu cuenta de Amazon. Más detalles han sido enviados a tu página de inicio d\'Alexa.',
             SHOPPING_LIST: 'liste d\'achats'
         },
     },
