@@ -250,7 +250,7 @@
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/df97/fb242a0c24d34256a68ab643fc760101/APP_ICON?versionId=SlYWDBCAl.TbstVTRwliCx.IclU0.CgQ&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1549093200&Signature=cAZHFRn5NR5RT5ITRcvF6xWGvAE%3D",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/3b4b/c2e558a5a828463d8dfb91f519bc37b7/APP_ICON_LARGE?versionId=YXJJLFtRcVJjPKfgtYkKEZyLqs7MP2ru&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1549093200&Signature=VPC9n8W2wAG8Ti2svmH7vzeGnxQ%3D",
           "summary": "Cette skill intègre les listes Alexa avec Microsoft To-Do.",
-          "description": "Cette skill intègre les listes Alexa avec Microsoft To-Do et transfère chaque item de la liste à vos listes Microsoft To-Do.\nUn compte personnel Microsoft est nécessaire pour utiliser Microsoft To-Do. Les comptes d'affaire Office 365 ne sont pas supportés en ce moment.\n\nVous pouvez utiliser les commandes natives de Alexa pour ajouter de nouveaux items à vos listes Microsoft To-Do. Il n'est pas nécessaire de démarrer la skill avant de procéder.\n\nLa skill supporte:\n- Transfère les items des listes Alexa vers la liste par défaut de Microsoft To-Do.\n- Transfère les items de liste d'achats vers la liste d'achats de Microsoft To-Do. Une nouvelle liste d'achats sera créée au besoin.\n- Plusieurs items peuvent être ajoutés avec une seule commande (il faut lister les items en utilisant \"et\" entre chaque item).\n- Les items de la liste Alexa originale seront retirés après le transfert vers Microsoft To-Do.\nLes cas de duplications seront détectés et réutilisés au cas où l'item aurait été complété.\nVotre liste d'achat peut maintenant être renommée.\n\nSi vous avez des questions ou si vous souhaitez nous faire part de vos commentaires, veuillez nous contacter à alexa@dev.buehl-online.de",
+          "description": "Cette skill intègre les listes Alexa avec Microsoft To-Do et transfère chaque item de la liste à vos listes Microsoft To-Do.\nUn compte personnel Microsoft est nécessaire pour utiliser Microsoft To-Do. Les comptes d'affaire Office 365 ne sont pas supportés en ce moment.\n\nVous pouvez utiliser les commandes natives d'Alexa pour ajouter de nouveaux items à vos listes Microsoft To-Do. Il n'est pas nécessaire de démarrer la skill avant de procéder.\n\nLa skill supporte:\n- Transfère les items des listes Alexa vers la liste par défaut de Microsoft To-Do.\n- Transfère les items de liste d'achats vers la liste d'achats de Microsoft To-Do. Une nouvelle liste d'achats sera créée au besoin.\n- Plusieurs items peuvent être ajoutés avec une seule commande (il faut lister les items en utilisant \"et\" entre chaque item).\n- Les items de la liste Alexa originale seront retirés après le transfert vers Microsoft To-Do.\nLes cas de duplications seront détectés et réutilisés au cas où l'item aurait été complété.\nVotre liste d'achat peut maintenant être renommée.\n\nSi vous avez des questions ou si vous souhaitez nous faire part de vos commentaires, veuillez nous contacter à alexa@dev.buehl-online.de",
           "examplePhrases": [
             "Alexa, ouvre To Do Magique.",
             "Alexa, ajoute sports et gym à ma liste de choses à faire.",
@@ -274,7 +274,7 @@
           "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/9a95/9ed096a147d943fc818be6682ffaca94/APP_ICON?versionId=ALnayjs71rgvMnooWZMal4qbEFvGmTbu&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1549093200&Signature=bYDrlWf%2Fa2bQOqnjUcx0rWlY2tU%3D",
           "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/8403/238fb4c64dc8459a84fdfb0d985f7be7/APP_ICON_LARGE?versionId=CUox8PnUwRAkYGwxQXRCt0gAJ5zZ8Cf4&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1549093200&Signature=q3N2pp%2FmZh4wx3o%2BguFkDpUjrPE%3D",
           "summary": "Cette skill intègre les listes Alexa avec Microsoft To-Do.",
-          "description": "Cette skill intègre les listes Alexa avec Microsoft To-Do et transfère chaque item de la liste à vos listes Microsoft To-Do.\nUn compte personnel Microsoft est nécessaire pour utiliser Microsoft To-Do. Les comptes d'affaire Office 365 ne sont pas supportés en ce moment.\n\nVous pouvez utiliser les commandes natives de Alexa pour ajouter de nouveaux items à vos listes Microsoft To-Do. Il n'est pas nécessaire de démarrer la skill avant de procéder.\n\nLa skill supporte:\n- Transfère les items des listes Alexa vers la liste par défaut de Microsoft To-Do.\n- Transfère les items de liste d'achats vers la liste d'achats de Microsoft To-Do. Une nouvelle liste d'achats sera créée au besoin.\n- Plusieurs items peuvent être ajoutés avec une seule commande (il faut lister les items en utilisant \"et\" entre chaque item).\n- Les items de la liste Alexa originale seront retirés après le transfert vers Microsoft To-Do.\nLes cas de duplications seront détectés et réutilisés au cas où l'item aurait été complété.\nVotre liste d'achat peut maintenant être renommée.\n\nSi vous avez des questions ou si vous souhaitez nous faire part de vos commentaires, veuillez nous contacter à alexa@dev.buehl-online.de",
+          "description": "Cette skill intègre les listes Alexa avec Microsoft To-Do et transfère chaque item de la liste à vos listes Microsoft To-Do.\nUn compte personnel Microsoft est nécessaire pour utiliser Microsoft To-Do. Les comptes d'affaire Office 365 ne sont pas supportés en ce moment.\n\nVous pouvez utiliser les commandes natives d'Alexa pour ajouter de nouveaux items à vos listes Microsoft To-Do. Il n'est pas nécessaire de démarrer la skill avant de procéder.\n\nLa skill supporte:\n- Transfère les items des listes Alexa vers la liste par défaut de Microsoft To-Do.\n- Transfère les items de liste d'achats vers la liste d'achats de Microsoft To-Do. Une nouvelle liste d'achats sera créée au besoin.\n- Plusieurs items peuvent être ajoutés avec une seule commande (il faut lister les items en utilisant \"et\" entre chaque item).\n- Les items de la liste Alexa originale seront retirés après le transfert vers Microsoft To-Do.\nLes cas de duplications seront détectés et réutilisés au cas où l'item aurait été complété.\nVotre liste d'achat peut maintenant être renommée.\n\nSi vous avez des questions ou si vous souhaitez nous faire part de vos commentaires, veuillez nous contacter à alexa@dev.buehl-online.de",
           "examplePhrases": [
             "Alexa, ouvre To Do Magique.",
             "Alexa, ajoute sports et gym à ma liste de choses à faire.",
@@ -292,55 +292,79 @@
             "todolist",
             "tasks"
           ]
+        },
+        "it-IT": {
+          "name": "Wunder To-Do",
+          "smallIconUri": "",
+          "largeIconUri": "",
+          "summary": "Questa skill integra le liste Alexa con Microsoft To-Do.",
+          "description": "Questa skill integra le liste Amazon Alexa con le liste Microsoft To-Do.\nE' richiesto un account Microsoft per utilizzare il servizio Microsoft To-Do. Gli account Business Office 365 non sono attualmente supportati.\n\nPuoi utilizzare i comandi nativi di Alexa per aggiungere elementi alle liste Microsoft To-Do. Non è necessario avviare la skill per procedere.\n\nQuesta skill supporta:\n- Trasferimento degli elementi dalla lista To-Do di Alexa con quella Microsoft To-Do.\n- Trasferimento degli elementi dalla lista della spesa di Alexa con quella Microsoft To-Do. Se non presente, una lista della spesa sarà creata in Microsoft To-Do.\n- Più di un elemento può essere aggiunto utilizzando un solo comando vocale (concatenando gli elementi es. Alexa aggiungi mele e pane alla lista della spesa).\n- Gli elementi nelle liste Alexa saranno rimossi una volta trasferiti.\n- Gli elementi duplicati saranno riutilizzati nel caso siano segnati come completati.\n- La tua lista della spesa potrà essere rinominata, inizialmente impostata come 'Alexa shopping list'.\n\nPer qualsiasi domanda o feedback, contattaci al seguente indirizzo alexa@dev.buehl-online.de",
+          "examplePhrases": [
+            "Alexa, apri Wunder To Do.",
+            "Alexa, aggiungi sport e palestra alla lista todo.",
+            "Alexa, aggiungi mele e pane alla lista della spesa."
+          ],
+          "keywords": [
+            "Microsoft",
+            "To-Do",
+            "Wunderlist",
+            "list",
+            "Shopping",
+            "list",
+            "todoist",
+            "shoppinglist",
+            "todolist",
+            "tasks"
+          ]
+        },
+        "es-ES": {
+          "name": "Wunder To-Do",
+          "smallIconUri": "",
+          "largeIconUri": "",
+          "summary": "Esta habilidad hace posible la integración de Microsoft To-Do.",
+          "description": "Esta habilidad integra las listas d'Alexa con Microsoft To-Do transfiriendo cada elemento de la lista a tus listas de Microsoft To-Do.\nPara utilizar Microsoft To-Do es necesario tener una cuenta de Microsoft activa. Las cuentas comerciales de Office 365 no son soportadas por el momento.\n\nPuedes utilizar los comandos nativos de Alexa para agregar nuevos elementos a tus listas de Microsoft To-Do. No es necesario de reiniciar la habilidad.\n\nEsta habilidad soporta:\n- la transferencia de los elementos de la lista de quéhaceres de Alexa a la lista por defecto de Microsoft To-Do.\n- la transferencia de elementos de la lista de compras de Microsoft To-Do. En caso de que no halla una lista de compras disponible, se crea una automáticamente.\n- se pueden agregar varios elementos con un solo comando (para ello hay que enlistar los elementos añadiendo \"y\" entre cada uno de ellos).\n- los elementos de la lista original de Alexa se eliminan después de haber sido transferidos a Microsoft To-Do.\n- se pueden detectar elementos duplicados y en caso de que éstos se encuentren ya concluídos, se pueden reutilizar.\n- tu lista de compras puede renombrarse. Inicialmente esta lista tenía el nombre fijo 'Lista de compras Alexa'\n\nPara cualquier pregunta o comentario, me puedes contactar con la siguiente dirección: alexa@dev.buehl-online.de",
+          "examplePhrases": [
+            "Alexa, abre Wunder To Do.",
+            "Alexa, agrega hacer deporte e ir de compras a la lista de quéhaceres.",
+            "Alexa, agrega pan y queso a mi lista de compras."
+          ],
+          "keywords": [
+            "Microsoft",
+            "To-Do",
+            "Wunderlist",
+            "list",
+            "Shopping",
+            "list",
+            "todoist",
+            "shoppinglist",
+            "todolist",
+            "tasks"
+          ]
+        },
+        "es-MX": {
+          "name": "Wunder To-Do",
+          "smallIconUri": "",
+          "largeIconUri": "",
+          "summary": "Esta habilidad hace posible la integración de Microsoft To-Do.",
+          "description": "Esta habilidad integra las listas d'Alexa con Microsoft To-Do transfiriendo cada elemento de la lista a tus listas de Microsoft To-Do.\nPara utilizar Microsoft To-Do es necesario tener una cuenta de Microsoft activa. Las cuentas comerciales de Office 365 no son soportadas por el momento.\n\nPuedes utilizar los comandos nativos de Alexa para agregar nuevos elementos a tus listas de Microsoft To-Do. No es necesario de reiniciar la habilidad.\n\nEsta habilidad soporta:\n- la transferencia de los elementos de la lista de quéhaceres de Alexa a la lista por defecto de Microsoft To-Do.\n- la transferencia de elementos de la lista de compras de Microsoft To-Do. En caso de que no halla una lista de compras disponible, se crea una automáticamente.\n- se pueden agregar varios elementos con un solo comando (para ello hay que enlistar los elementos añadiendo \"y\" entre cada uno de ellos).\n- los elementos de la lista original de Alexa se eliminan después de haber sido transferidos a Microsoft To-Do.\n- se pueden detectar elementos duplicados y en caso de que éstos se encuentren ya concluídos, se pueden reutilizar.\n- tu lista de compras puede renombrarse. Inicialmente esta lista tenía el nombre fijo 'Lista de compras Alexa'\n\nPara cualquier pregunta o comentario, me puedes contactar con la siguiente dirección: alexa@dev.buehl-online.de",
+          "examplePhrases": [
+            "Alexa, abre Wunder To Do.",
+            "Alexa, agrega hacer deporte e ir de compras a la lista de quéhaceres.",
+            "Alexa, agrega pan y queso a mi lista de compras."
+          ],
+          "keywords": [
+            "Microsoft",
+            "To-Do",
+            "Wunderlist",
+            "list",
+            "Shopping",
+            "list",
+            "todoist",
+            "shoppinglist",
+            "todolist",
+            "tasks"
+          ]
         }
-      },
-      "it-IT": {
-        "name": "Wunder To-Do",
-        "smallIconUri": "",
-        "largeIconUri": "",
-        "summary": "Questa skill integra le liste Alexa con Microsoft To-Do.",
-        "description": "Questa skill integra le liste Amazon Alexa con le liste Microsoft To-Do.\nE' richiesto un account Microsoft per utilizzare il servizio Microsoft To-Do. Gli account Business Office 365 non sono attualmente supportati.\n\nPuoi utilizzare i comandi nativi di Alexa per aggiungere elementi alle liste Microsoft To-Do. Non è necessario avviare la skill per procedere.\n\nQuesta skill supporta:\n- Trasferimento degli elementi dalla lista To-Do di Alexa con quella Microsoft To-Do.\n- Trasferimento degli elementi dalla lista della spesa di Alexa con quella Microsoft To-Do. Se non presente, una lista della spesa sarà creata in Microsoft To-Do.\n- Più di un elemento può essere aggiunto utilizzando un solo comando vocale (concatenando gli elementi es. Alexa aggiungi mele e pane alla lista della spesa).\n- Gli elementi nelle liste Alexa saranno rimossi una volta trasferiti.\n- Gli elementi duplicati saranno riutilizzati nel caso siano segnati come completati.\n- La tua lista della spesa potrà essere rinominata, inizialmente impostata come 'Alexa shopping list'.\n\nPer qualsiasi domanda o feedback, contattaci al seguente indirizzo alexa@dev.buehl-online.de",
-        "examplePhrases": [
-          "Alexa, apri Wunder To Do.",
-          "Alexa, aggiungi sport e palestra alla lista todo.",
-          "Alexa, aggiungi mele e pane alla lista della spesa."
-        ],
-        "keywords": [
-          "Microsoft",
-          "To-Do",
-          "Wunderlist",
-          "list",
-          "Shopping",
-          "list",
-          "todoist",
-          "shoppinglist",
-          "todolist",
-          "tasks"
-        ]
-      },
-      "Es-ES": {
-        "name": "Wunder To-Do",
-        "smallIconUri": "",
-        "largeIconUri": "",
-        "summary": "Esta habilidad hace posible la integración de Microsoft To-Do.",
-        "description": "Esta habilidad integra las listas de Alexa con Microsoft To-Do transfiriendo cada elemento de la lista a tus listas de Microsoft To-Do.\nPara utilizar Microsoft To-Do es necesario tener una cuenta de Microsoft activa. Las cuentas comerciales de Office 365 no son soportadas por el momento.\n\nPuedes utilizar los comandos nativos de Alexa para agregar nuevos elementos a tus listas de Microsoft To-Do. No es necesario de reiniciar la habilidad.\n\nEsta habilidad soporta:\n- la transferencia de los elementos de la lista de quéhaceres de Alexa a la lista por defecto de Microsoft To-Do.\n- la transferencia de elementos de la lista de compras de Microsoft To-Do. En caso de que no halla una lista de compras disponible, se crea una automáticamente.\n- se pueden agregar varios elementos con un solo comando (para ello hay que enlistar los elementos añadiendo \"y\" entre cada uno de ellos).\n- los elementos de la lista original de Alexa se eliminan después de haber sido transferidos a Microsoft To-Do.\n- se pueden detectar elementos duplicados y en caso de que éstos se encuentren ya concluídos, se pueden reutilizar.\n- tu lista de compras puede renombrarse. Inicialmente esta lista tenía el nombre fijo 'Lista de compras Alexa'\n\nPara cualquier pregunta o comentario, me puedes contactar con la siguiente dirección: alexa@dev.buehl-online.de",
-        "examplePhrases": [
-          "Alexa, abre Wunder To Do.",
-          "Alexa, agrega hacer deporte e ir de compras a la lista de quéhaceres.",
-          "Alexa, agrega pan y queso a mi lista de compras."
-        ],
-        "keywords": [
-          "Microsoft",
-          "To-Do",
-          "Wunderlist",
-          "list",
-          "Shopping",
-          "list",
-          "todoist",
-          "shoppinglist",
-          "todolist",
-          "tasks"
-        ]
       },
       "isAvailableWorldwide": true,
       "distributionMode": "PUBLIC",
