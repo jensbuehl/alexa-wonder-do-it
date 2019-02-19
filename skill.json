@@ -318,7 +318,7 @@
           ]
         },
         "es-ES": {
-          "name": "To-Do maravillosa",
+          "name": "To-Do Maravillosa",
           "smallIconUri": "",
           "largeIconUri": "",
           "summary": "Esta skill hace posible la integración de Microsoft To-Do.",
@@ -342,7 +342,7 @@
           ]
         },
         "es-MX": {
-          "name": "To-Do maravillosa",
+          "name": "To-Do Maravillosa",
           "smallIconUri": "",
           "largeIconUri": "",
           "summary": "Esta skill hace posible la integración de Microsoft To-Do.",
@@ -368,7 +368,7 @@
       },
       "isAvailableWorldwide": true,
       "distributionMode": "PUBLIC",
-      "testingInstructions": "Just extended to french speaking countries, Italian and Spanish. No functional changes. \n\nA microsoft account is required in order to link to the MS-To-Do list.\nYour test account:\n\nname: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\n- Concerning \"Your invocation name is generic, and customers may not realize that they are invoking a skill as opposed to interacting with native Alexa functionality.\" (Australia)\nSince the same invocation name is already live for other english speaking regions I would ask you to allow this also for Australia to have a consistent experience all over the world. Furthermore, please keep in mind that the skill does not need any invocation at all, since the native alexa list management command shall be used as of now.\n \n- Concerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.\n\n- Concerning \"Changes made to lists through the application associated with the skill are not displayed accurately in the Alexa companion application.\"\nSince no two way synchronization is possible, yet nor it it is described as feature (it states that alexa list elements are removed after forwarding to MS To-Do) this is as intended as of now but will change in future once Microsoft allows two way sync.",
+      "testingInstructions": "Integrated your feedback. Extended to french speaking countries, Italian and Spanish. No functional changes. \n\nA microsoft account is required in order to link to the MS-To-Do list.\nYour test account:\n\nname: buehl.alexacert@outlook.com\npwd:  WunderCert2018!\n\n- Concerning \"Your invocation name is generic, and customers may not realize that they are invoking a skill as opposed to interacting with native Alexa functionality.\" (Australia)\nSince the same invocation name is already live for other english speaking regions I would ask you to allow this also for Australia to have a consistent experience all over the world. Furthermore, please keep in mind that the skill does not need any invocation at all, since the native alexa list management command shall be used as of now.\n \n- Concerning \"The skill prompts users for an input then immediately closes the session.\" \nSince this skill does not use custom intents but relies on the built in alexa \"List handling\" intents, it is necessary and intended that the session ends. The requests are handled via default list intent which forwards the information via list event to the skill.\n\n- Concerning \"Changes made to lists through the application associated with the skill are not displayed accurately in the Alexa companion application.\"\nSince no two way synchronization is possible, yet nor it it is described as feature (it states that alexa list elements are removed after forwarding to MS To-Do) this is as intended as of now but will change in future once Microsoft allows two way sync.",
       "category": "TO_DO_LISTS_AND_NOTES",
       "distributionCountries": []
     }
