@@ -58,15 +58,15 @@ const translations = {
     },
     'es': {
         translation: {
-            SKILL_NAME: 'Wunder To-Do',
-            WELCOME_MESSAGE: '¡Bienvenido a Wunder To-Do! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
+            SKILL_NAME: 'To-Do Maravillosa',
+            WELCOME_MESSAGE: '¡Bienvenido! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
             HELP_MESSAGE: 'Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
             HELP_REPROMPT: 'Utiliza a Alexa para agregar nuevos elementos a tus listas.',
             STOP_MESSAGE: '¡Hasta luego!',
-            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Permisos insuficientes.',
-            PERMISSIONS_MISSING_MESSAGE: 'Para iniciar esta habilidad, favor de utilizar la aplicación móvil para confirmar los permisos de acceso a la lista requerida.',
+            PERMISSIONS_MISSING_CARD_TITLE: 'To-Do Maravillosa - Permisos insuficientes.',
+            PERMISSIONS_MISSING_MESSAGE: 'Para iniciar esta skill, favor de utilizar la aplicación móvil para confirmar los permisos de acceso a la lista requerida.',
             ERROR_MESSAGE: 'Lo siento, no puedo realizar esta tarea debido a problemas técnicos.',
-            LINK_ACCOUNT_MESSAGE: 'Para utilizar esta habilidad, favor de utilizar la aplicación móvil d\'Alexa para autentificarte con tu cuenta de Amazon. Más detalles han sido enviados a tu página de inicio d\'Alexa.',
+            LINK_ACCOUNT_MESSAGE: 'Para utilizar esta skill, favor de utilizar la aplicación móvil d\'Alexa para autentificarte con tu cuenta de Amazon. Más detalles han sido enviados a tu página de inicio d\'Alexa.',
             SHOPPING_LIST: 'liste d\'achats'
         },
     },
