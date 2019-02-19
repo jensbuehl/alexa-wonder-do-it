@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "wunder to do",
+      "invocationName": "miracolo to do",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
