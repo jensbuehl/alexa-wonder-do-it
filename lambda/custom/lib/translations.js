@@ -44,12 +44,12 @@ const translations = {
     },
     'it': {
         translation: {
-            SKILL_NAME: 'Wunder To-Do',
-            WELCOME_MESSAGE: 'Benvenuto su Wunder To-Do! Utilizza Alexa per aggiungere nuovi elementi alle tue liste! Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista To-do.',
-            HELP_MESSAGE: 'Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista To-do.',
+            SKILL_NAME: 'Miracolo To-Do',
+            WELCOME_MESSAGE: 'Benvenuto! Utilizza Alexa per aggiungere nuovi elementi alle tue liste! Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista da fare.',
+            HELP_MESSAGE: 'Puoi dire, "Alexa, aggiungi il pane alla mia lista della spesa" oppure "Alexa, aggiungi \'Fare shopping" alla mia lista da fare.',
             HELP_REPROMPT: 'Usa Alexa per aggiungere nuovi elementi alle tue liste!',
             STOP_MESSAGE: 'Arrivederci!',
-            PERMISSIONS_MISSING_CARD_TITLE: 'Wunder To-Do - Permessi mancanti',
+            PERMISSIONS_MISSING_CARD_TITLE: 'Miracolo To-Do - Permessi mancanti',
             PERMISSIONS_MISSING_MESSAGE: 'Per un corretto funzionamento della skill, perfavore accetta le  richieste di permessi dello step successivo.',
             ERROR_MESSAGE: 'Mi spiace, a causa di una difficoltà tecnica non posso aiutarti.',
             LINK_ACCOUNT_MESSAGE: 'Per utilizzare questa skill, perfavore segui lo step successivo per autenticarti con l\'account Amazon. Maggiori informazioni sono state spedite al vostro account Alexa.',
