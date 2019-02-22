@@ -59,8 +59,8 @@ const translations = {
     'es': {
         translation: {
             SKILL_NAME: 'To-Do Maravillosa',
-            WELCOME_MESSAGE: '¡Bienvenido! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
-            HELP_MESSAGE: 'Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de quéhaceres".',
+            WELCOME_MESSAGE: '¡Bienvenido! Utiliza a Alexa para agregar nuevos elementos a tus listas. Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de tareas".',
+            HELP_MESSAGE: 'Puedes decir: "Alexa, añade pan a mi lista de compras" o "Alexa, añade compras a mi lista de tareas".',
             HELP_REPROMPT: 'Utiliza a Alexa para agregar nuevos elementos a tus listas.',
             STOP_MESSAGE: '¡Hasta luego!',
             PERMISSIONS_MISSING_CARD_TITLE: 'To-Do Maravillosa - Permisos insuficientes.',

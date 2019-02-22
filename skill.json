@@ -328,7 +328,7 @@
           "description": "Esta skill integra las listas d'Alexa con Microsoft To-Do transfiriendo cada elemento de la lista a tus listas de Microsoft To-Do.\nPara utilizar Microsoft To-Do es necesario tener una cuenta de Microsoft activa. Las cuentas comerciales de Office 365 no son soportadas por el momento.\n\nPuedes utilizar los comandos nativos de Alexa para agregar nuevos elementos a tus listas de Microsoft To-Do. No es necesario de reiniciar la skill.\n\nEsta skill soporta:\n- la transferencia de los elementos de la lista de quéhaceres de Alexa a la lista por defecto de Microsoft To-Do.\n- la transferencia de elementos de la lista de compras de Microsoft To-Do. En caso de que no halla una lista de compras disponible, se crea una automáticamente.\n- se pueden agregar varios elementos con un solo comando (para ello hay que enlistar los elementos añadiendo \"y\" entre cada uno de ellos).\n- los elementos de la lista original de Alexa se eliminan después de haber sido transferidos a Microsoft To-Do.\n- se pueden detectar elementos duplicados y en caso de que éstos se encuentren ya concluídos, se pueden reutilizar.\n- tu lista de compras puede renombrarse. Inicialmente esta lista tenía el nombre fijo 'Lista de compras Alexa'\n\nPara cualquier pregunta o comentario, me puedes contactar con la siguiente dirección: alexa@dev.buehl-online.de",
           "examplePhrases": [
             "Alexa, abre To Do maravillosa.",
-            "Alexa, agrega hacer deporte e ir de compras a la lista de quéhaceres.",
+            "Alexa, agrega hacer deporte e ir de compras a la lista de tareas.",
             "Alexa, agrega pan y queso a mi lista de compras."
           ],
           "keywords": [
@@ -352,7 +352,7 @@
           "description": "Esta skill integra las listas d'Alexa con Microsoft To-Do transfiriendo cada elemento de la lista a tus listas de Microsoft To-Do.\nPara utilizar Microsoft To-Do es necesario tener una cuenta de Microsoft activa. Las cuentas comerciales de Office 365 no son soportadas por el momento.\n\nPuedes utilizar los comandos nativos de Alexa para agregar nuevos elementos a tus listas de Microsoft To-Do. No es necesario de reiniciar la skill.\n\nEsta skill soporta:\n- la transferencia de los elementos de la lista de quéhaceres de Alexa a la lista por defecto de Microsoft To-Do.\n- la transferencia de elementos de la lista de compras de Microsoft To-Do. En caso de que no halla una lista de compras disponible, se crea una automáticamente.\n- se pueden agregar varios elementos con un solo comando (para ello hay que enlistar los elementos añadiendo \"y\" entre cada uno de ellos).\n- los elementos de la lista original de Alexa se eliminan después de haber sido transferidos a Microsoft To-Do.\n- se pueden detectar elementos duplicados y en caso de que éstos se encuentren ya concluídos, se pueden reutilizar.\n- tu lista de compras puede renombrarse. Inicialmente esta lista tenía el nombre fijo 'Lista de compras Alexa'\n\nPara cualquier pregunta o comentario, me puedes contactar con la siguiente dirección: alexa@dev.buehl-online.de",
           "examplePhrases": [
             "Alexa, abre To Do maravillosa.",
-            "Alexa, agrega hacer deporte e ir de compras a la lista de quéhaceres.",
+            "Alexa, agrega hacer deporte e ir de compras a la lista de tareas.",
             "Alexa, agrega pan y queso a mi lista de compras."
           ],
           "keywords": [
