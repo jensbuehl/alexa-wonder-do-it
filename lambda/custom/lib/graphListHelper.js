@@ -143,8 +143,8 @@ async function getDefaultFolder(graphClient){
 }
 
 async function createFolder(graphClient, listName){
-    const graphListItem = createOutlookTaskFolder(listName);
-    return await addFolder(graphClient, listName);
+    const outlookTaskFolder = createOutlookTaskFolder(listName);
+    return await addFolder(graphClient, outlookTaskFolder);
 }
 
 async function handleDuplicates(graphClient, outlookTask, outlookTaskFolder){
