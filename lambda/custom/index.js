@@ -180,7 +180,7 @@ const HouseHoldListItemsCreatedEventHandler = {
 				const alexaTaskName = listItem.value;
 				
 				//Split and loop over list
-				alexaTaskName.split(/ and | und /).forEach(function(entry) {
+				alexaTaskName.split(/ and | und | y | e | et  /).forEach(function(entry) {
 					//Make first letter upper case
                     var alexaSplitTaskName = stringExtensions.capitalize(entry);
 					alexaListClient.deleteListItem(listId, listItem.id, consentToken)
