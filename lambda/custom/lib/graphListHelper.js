@@ -1,3 +1,5 @@
+const stringExtensions = require('./stringExtensions.js');
+
 //Microsoft Graph requests
 async function addTaskToFolder(graphClient, outlookTask, outlookTaskFolder){
     try {
@@ -34,6 +36,9 @@ async function addTask(graphClient, outlookTask, outlookTaskFolder){
 }
 
 async function getTasks(graphClient, filter, outlookTaskFolder){
+    //Filter parameters does apparently only accept ISO/IEC 8859-1 characterset.
+    //Still the filter clause does work to detect duplicates, apparently Microsoft uses the same translation internally.
+    filter = stringExtensions.replaceUnsupportedCharacters(filter);
     try {
         var tasks = await graphClient
         .api(`/me/outlook/taskFolders/${outlookTaskFolder.id}/tasks`)
@@ -92,7 +97,6 @@ async function addFolder(graphClient, outlookTaskFolder){
 }
 
 //Skill logic
-
 function buildShoppingListFilter(listName){
     return `contains(name,'einkauf')
             or contains(name,'shop')
@@ -166,6 +170,7 @@ async function handleDuplicates(graphClient, outlookTask, outlookTaskFolder){
 
 async function getDuplicates(graphClient, outlookTask, outlookTaskFolder){
     var duplicateFilter = `subject eq '${outlookTask.subject}'`
+    console.log(outlookTask)
     if (undefined === outlookTaskFolder) {
         var outlookTaskFolder = await getDefaultFolder(graphClient);
     }
