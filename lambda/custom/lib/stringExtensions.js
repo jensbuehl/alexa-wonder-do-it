@@ -17,7 +17,9 @@ function capitalize(itemToAdd) {
 * @returns {String} the updated string
 */
 function replaceUnsupportedCharacters(itemToAdd){
-    return itemToAdd.replace(/œ/g, 'oe');
+    itemToAdd = itemToAdd.replace(/œ/g, 'oe');
+    itemToAdd = itemToAdd.replace(/Œ/g, 'Oe');
+    return itemToAdd;
 }
 
 
