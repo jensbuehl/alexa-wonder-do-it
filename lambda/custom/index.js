@@ -18,7 +18,6 @@ const Alexa = require('ask-sdk-core');
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 var MicrosoftGraph = require("@microsoft/microsoft-graph-client");
-var graphClient = {};
 
 // My modules
 const alexaListHelper = require('./lib/alexaListHelper.js');
@@ -193,19 +192,19 @@ const HouseHoldListItemsCreatedEventHandler = {
 					//Create task item
 					const graphTaskItem = {
 						"subject": alexaSplitTaskName,
-					};
-
+                    };
+                    
 					//Add to default To-Do list
 					if (alexaList.name === DEFAULT_ALEXA_LISTS.TODO){
-                        graphListHelper.addToDoItem(graphClient, graphTaskItem, consentToken);
+                        graphListHelper.addToDoItem(attributes.graphClient, graphTaskItem, consentToken);
 					} 
 					//Add to shopping list or create if not exists
 					else if (alexaList.name === DEFAULT_ALEXA_LISTS.SHOPPING){
-                        graphListHelper.addShoppingItem(graphClient, alexaList.name, graphTaskItem, consentToken)
+                        graphListHelper.addShoppingItem(attributes.graphClient, alexaList.name, graphTaskItem, consentToken)
 					} 
 					//Add to custom named list or create if not exists
 					else {
-						graphListHelper.addCustomTaskItem(graphClient, alexaList.name, graphTaskItem, consentToken)
+						graphListHelper.addCustomTaskItem(attributes.graphClient, alexaList.name, graphTaskItem, consentToken)
 					}
 				});
             });
@@ -335,12 +334,15 @@ const MicrosoftGraphValidationInterceptor = {
                 console.log("Microsoft Graph API Auth Token: " + graphToken);
 
                 // Initialize the Microsoft Graph client
-                graphClient = MicrosoftGraph.Client.init({
+                var graphClient = MicrosoftGraph.Client.init({
                     defaultVersion: 'beta',
                     authProvider: (done) => {
                         done(null, graphToken);
                     }
-                });        
+                });
+                const attributes = handlerInput.attributesManager.getRequestAttributes();      
+                attributes.graphClient = graphClient;
+                handlerInput.attributesManager.setRequestAttributes(attributes);
             } else {
                 //if no amazon token, return a LinkAccount card
                 console.log("Account not linked properly. Microsoft Graph permissions are not defined!");
