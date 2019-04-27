@@ -39,6 +39,7 @@ async function getTasks(graphClient, filter, outlookTaskFolder){
     //Filter parameters does apparently only accept ISO/IEC 8859-1 characterset.
     //Still the filter clause does work to detect duplicates, apparently Microsoft uses the same translation internally.
     filter = stringExtensions.replaceUnsupportedCharacters(filter);
+    //console.log(filter);
     try {
         var tasks = await graphClient
         .api(`/me/outlook/taskFolders/${outlookTaskFolder.id}/tasks`)
