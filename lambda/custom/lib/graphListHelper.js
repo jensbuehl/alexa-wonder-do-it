@@ -98,7 +98,7 @@ async function addFolder(graphClient, outlookTaskFolder){
 }
 
 //Skill logic
-function buildShoppingListFilter(listName){
+function buildShoppingListFilter(){
     return `contains(name,'einkauf')
             or contains(name,'shop')
             or contains(name,'grocery')
@@ -108,8 +108,11 @@ function buildShoppingListFilter(listName){
             or contains(name,'courses')
             or contains(name,'compra')
             or contains(name,'compra')
-            or contains(name,'spesa')
-            or contains(name,'${listName}')`;
+            or contains(name,'spesa')`;
+}
+
+function buildGivenListFilter(listName){
+    return `contains(name,'${listName}')`;
 }
 
 function createOutlookTaskFolder(name){
@@ -117,13 +120,23 @@ function createOutlookTaskFolder(name){
 }
 
 async function getShoppingList(graphClient, listName){
-    var shoppingListFilter = buildShoppingListFilter(listName);
-    var lists = await getFolders(graphClient, shoppingListFilter);
+    var shoppingListFilter = buildShoppingListFilter();
+    var givenListFilter = buildGivenListFilter(listName);
+
+    //Filter withouth given listName first! Prefer predefined lists instead of the given name!
+    var lists = await getFolders(graphClient, shoppingListFilter); 
     
     if (lists["@odata.count"] > 0){
         return lists.value[0];
-    } else {
-        return createFolder(graphClient, listName);
+    } else {    
+        //Do a second run with the given name here, if no predefined list found, then look for the given one.
+        lists = await getFolders(graphClient, givenListFilter); 
+        if (lists["@odata.count"] > 0){
+            return lists.value[0];
+        } else {        
+            //Only if this one also is not found then create a new one!
+            return createFolder(graphClient, listName);
+        }
     }
 }
 
@@ -187,7 +200,11 @@ async function getDuplicates(graphClient, outlookTask, outlookTaskFolder){
 * @param {String} consentToken consent token from Alexa request
 */
 const addShoppingItem = async (graphClient, alexaListName, outlookTask, consentToken) => {
-    const outlookTaskFolder = await getShoppingList(graphClient, alexaListName); 
+    console.log("alexaListName input in addShoppingItem():"); 
+    console.log(alexaListName); 
+    const outlookTaskFolder = await getShoppingList(graphClient, alexaListName);
+    console.log("outlookTaskFolder after mapping in addShoppingItem():"); 
+    console.log(outlookTaskFolder); 
     if (false === await handleDuplicates(graphClient, outlookTask, outlookTaskFolder)){
         //No duplicates found!
  
