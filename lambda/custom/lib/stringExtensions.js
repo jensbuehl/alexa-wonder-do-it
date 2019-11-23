@@ -34,6 +34,8 @@ function replaceUnsupportedCharacters(strInputString){
 
     strInputString = strInputString.replace(/d'u/g, "d''u");
     strInputString = strInputString.replace(/l'u/g, "l''u");
+
+    strInputString = strInputString.replace(/'s/g, "''s");
     return strInputString;
 }
 
