@@ -19,7 +19,8 @@ function capitalize(strInputString) {
 function replaceUnsupportedCharacters(strInputString){
     strInputString = strInputString.replace(/œ/g, 'oe');
     strInputString = strInputString.replace(/Œ/g, 'Oe');
-    
+    strInputString = strInputString.replace(/â/g, 'a');
+
     strInputString = strInputString.replace(/d'a/g, "d''a");
     strInputString = strInputString.replace(/l'a/g, "l''a");
 
