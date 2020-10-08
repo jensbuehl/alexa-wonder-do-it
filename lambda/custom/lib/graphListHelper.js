@@ -141,7 +141,8 @@ async function getShoppingList(graphClient, listName){
 }
 
 async function getCustomList(graphClient, listName){
-    var customListFilter = `startsWith(name,'${listName}')`;
+    //var customListFilter = `startsWith(name,'${listName}')`;
+    var customListFilter = buildGivenListFilter(listName);
     var lists = await getFolders(graphClient, customListFilter);
     
     if (lists["@odata.count"] > 0){
