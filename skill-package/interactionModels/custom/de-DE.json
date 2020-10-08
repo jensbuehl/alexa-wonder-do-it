@@ -1,0 +1,33 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "wunder to do",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "Abbrechen"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "Frage nach Hilfe",
+            "Hilfe"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+            "Stop"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ]
+    }
+  },
+  "version": "2"
+}
