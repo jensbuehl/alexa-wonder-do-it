@@ -198,7 +198,7 @@ const HouseHoldListItemsCreatedEventHandler = {
 
 					//Create task item
 					const graphTaskItem = {
-						"subject": alexaSplitTaskName,
+						"title": alexaSplitTaskName,
                     };
                     
 					//Add to default To-Do list
