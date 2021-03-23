@@ -1,4 +1,5 @@
-You may find useful information in the overview / post mortem slides (unfortunately in German as of now)
+You may find useful information in the overview / post mortem slides (unfortunately in German as of now).
+
 Due to other commitments I can no longer maintain the further development of this skill. (e.g. adjust to updated MS Graph API, support more languages, full 2-way-sync,...)
 
 # Introduction
